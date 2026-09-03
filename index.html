@@ -13,15 +13,44 @@
   <a class="skip-link" href="#main-content">跳至主要内容</a>
 
   <header class="site-header">
-    <div class="container">
+    <div class="site-header__inner container">
       <a class="site-name" href="index.html" aria-label="Irene 老师 Workshop 首页">
         Irene 老师 Workshop
       </a>
+
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="site-menu"
+        aria-label="打开联系菜单"
+        data-menu-toggle
+      >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
+
+      <nav class="contact-menu" id="site-menu" aria-label="联系方式" data-contact-menu hidden>
+        <a href="#" data-contact="whatsapp">WhatsApp</a>
+        <a href="#" data-contact="facebook">Facebook</a>
+      </nav>
     </div>
   </header>
 
   <main id="main-content" class="site-main container">
     <h1 class="visually-hidden">Irene 老师 Workshop</h1>
+
+    <section class="hero" data-section="hero">
+      <div class="hero__media" data-hero-media></div>
+
+      <div class="hero__content">
+        <p class="hero__eyebrow" data-hero-eyebrow></p>
+        <p class="hero__statement" data-hero-statement></p>
+
+        <div class="hero__actions" data-hero-actions></div>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer" aria-label="页尾"></footer>

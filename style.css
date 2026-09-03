@@ -369,6 +369,48 @@ textarea {
   margin-block-start: var(--space-4);
 }
 
+.testimonials {
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+.testimonial-slider {
+  display: grid;
+  grid-auto-columns: calc(100% - 2.75rem);
+  grid-auto-flow: column;
+  gap: var(--space-3);
+  overflow-x: auto;
+  padding-block-end: var(--space-3);
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: inline mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+.testimonial-card {
+  min-height: 13rem;
+  margin: 0;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: rgba(255, 255, 255, 0.72);
+  scroll-snap-align: start;
+}
+
+.testimonial-card__quote {
+  margin: 0;
+  color: var(--color-heading);
+  font-size: 1.1rem;
+  line-height: 1.75;
+}
+
+.testimonial-card__author {
+  margin-block-start: var(--space-4);
+  color: var(--color-text);
+  font-size: var(--text-small);
+  font-weight: 700;
+}
+
 .is-ready .hero {
   animation: hero-fade-in 400ms ease-out both;
 }

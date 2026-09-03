@@ -147,9 +147,43 @@ function renderCurrentWorkshop() {
   section.hidden = false;
 }
 
+function renderTestimonials() {
+  const section = document.querySelector('[data-section="testimonials"]');
+  const container = document.querySelector("[data-testimonials]");
+
+  if (
+    !section ||
+    !container ||
+    typeof siteData === "undefined" ||
+    !Array.isArray(siteData.testimonials) ||
+    siteData.testimonials.length === 0
+  ) {
+    return;
+  }
+
+  const cards = siteData.testimonials.map((testimonial) => {
+    const card = document.createElement("blockquote");
+    const quote = document.createElement("p");
+    const author = document.createElement("footer");
+
+    card.className = "testimonial-card";
+    quote.className = "testimonial-card__quote";
+    author.className = "testimonial-card__author";
+    quote.textContent = `“${testimonial.quote}”`;
+    author.textContent = `— ${testimonial.author}`;
+    card.append(quote, author);
+
+    return card;
+  });
+
+  container.replaceChildren(...cards);
+  section.hidden = false;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   renderHero();
   setupContactMenu();
   renderCurrentWorkshop();
+  renderTestimonials();
   document.documentElement.classList.add("is-ready");
 });

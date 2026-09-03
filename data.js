@@ -48,7 +48,29 @@ const siteData = {
   pastWorkshops: [],
 
   // 学员反馈
-  testimonials: [],
+  // 以下为测试资料，正式上线前可直接替换文字与姓名。
+  testimonials: [
+    {
+      quote: "步骤很清楚，我跟着做就完成了自己的教学素材。",
+      author: "Low 老师"
+    },
+    {
+      quote: "不是只介绍工具，而是真的带我把 AI 用进备课。",
+      author: "刘老师"
+    },
+    {
+      quote: "课堂节奏刚刚好，边学边做，不会听完又不知道从哪里开始。",
+      author: "Aina 老师"
+    },
+    {
+      quote: "以前觉得 AI 很复杂，这次终于知道怎样整理自己的想法。",
+      author: "陈老师"
+    },
+    {
+      quote: "完成后的作品可以继续修改，也能直接带回学校使用。",
+      author: "Nurul 老师"
+    }
+  ],
 
   // School Workshop｜校内教师培训记录
   schoolWorkshops: [],

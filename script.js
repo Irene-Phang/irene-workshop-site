@@ -195,8 +195,21 @@ function getCompletedWorkshops() {
   }
 
   return siteData.pastWorkshops
-    .filter((workshop) => workshop.status === "completed")
+    .filter((workshop) => workshop.status === "completed" && workshop.image)
     .sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+}
+
+function createPastWorkshopPoster(workshop) {
+  const poster = document.createElement("article");
+  const image = document.createElement("img");
+
+  poster.className = "past-workshop-poster";
+  image.className = "past-workshop-poster__image";
+  image.src = workshop.image;
+  image.alt = workshop.imageAlt || workshop.title;
+  poster.append(image);
+
+  return poster;
 }
 
 function renderPastWorkshops() {
@@ -210,7 +223,7 @@ function renderPastWorkshops() {
   }
 
   if (homeSection && homeSlider) {
-    const cards = workshops.slice(0, 4).map(createWorkshopCard);
+    const cards = workshops.slice(0, 4).map(createPastWorkshopPoster);
     const moreLink = document.createElement("a");
     moreLink.className = "view-more-card";
     moreLink.href = "past-workshops.html";
@@ -220,7 +233,7 @@ function renderPastWorkshops() {
   }
 
   if (pageList) {
-    pageList.replaceChildren(...workshops.map(createWorkshopCard));
+    pageList.replaceChildren(...workshops.map(createPastWorkshopPoster));
   }
 }
 

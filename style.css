@@ -434,6 +434,18 @@ textarea {
   scroll-snap-align: start;
 }
 
+.past-workshop-poster {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 1.25rem;
+  background: var(--color-surface);
+}
+
+.past-workshop-poster__image {
+  width: 100%;
+  height: auto;
+}
+
 .view-more-card {
   display: flex;
   min-height: 18rem;

@@ -29,8 +29,8 @@ const siteData = {
   // ---------- 联系方式 ----------
   // 填入完整网址，例如：https://wa.me/60123456789
   contact: {
-    whatsapp: "",
-    facebook: ""
+    whatsapp: "https://wa.me/qr/L7ZKZNBI5VQGE1",
+    facebook: "https://www.facebook.com/share/1BpprK2FiH/"
   },
 
   // ---------- 首页目前主推的公开 Workshop ----------

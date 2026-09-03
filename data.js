@@ -29,7 +29,20 @@ const siteData = {
   },
 
   // 首页目前主推的公开 Workshop
-  currentWorkshop: null,
+  // status 可填写：upcoming、open、full、completed
+  currentWorkshop: {
+    title: "AI 出考卷实战 Workshop",
+    image: "",
+    imageAlt: "AI 出考卷实战 Workshop 宣传图",
+    date: "2026-10-12",
+    dateLabel: "10月12日（星期一）",
+    time: "晚上8点–10点",
+    deliveryMode: "线上",
+    summary: "用两小时完成一套可以重复使用的 AI 出题流程。",
+    status: "open",
+    detailUrl: "workshop-template.html",
+    price: ""
+  },
 
   // 已完成的公开 Workshop
   pastWorkshops: [],

@@ -52,15 +52,15 @@ const siteData = {
   testimonials: [
     {
       quote: "节省时间，可以快速生成作文教材",
-      author: "何俊城"
+      author: "何XX 老师"
     },
     {
       quote: "获益良多，在教学作文方面省了很多时间",
-      author: "Ng Chun Kit"
+      author: "Ng XX 老师"
     },
     {
       quote: "节省作文备课时间，更清楚怎样利用 AI 教作文，学会从范文延伸出完整教学素材，对 AI 教学更有信心了",
-      author: "KOO YOON JYE"
+      author: "Koo XX 老师"
     }
   ],
 

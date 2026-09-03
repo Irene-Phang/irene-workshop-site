@@ -36,38 +36,41 @@ const siteData = {
   // ---------- 首页目前主推的公开 Workshop ----------
   // status 只填写：upcoming、open、full、completed
   currentWorkshop: {
-    title: "AI 出考卷实战 Workshop",
-    image: "",
-    imageAlt: "AI 出考卷实战 Workshop 宣传图",
-    date: "2026-10-12",
-    dateLabel: "10月12日（星期一）",
-    time: "晚上8点–10点",
+    title: "AI 作文教学实战 Workshop｜第二场",
+    image: "images/ai-writing-workshop-session-2.png",
+    imageAlt: "AI 作文教学实战 Workshop 第二场宣传图",
+    date: "",
+    dateLabel: "日期待公布",
+    time: "时间待公布",
     deliveryMode: "线上",
-    summary: "用两小时完成一套可以重复使用的 AI 出题流程。",
-    status: "open",
+    summary: "从一个作文题目，完成一套可以直接上课的作文教学教材。",
+    status: "upcoming",
     detailUrl: "workshop-template.html",
-    price: "RMXX",
+    price: "收费待公布",
     detail: {
-      claim: "2小时完成一套可重复使用的 AI 出题流程",
+      claim: "2小时，跟着我完整实作一次",
       painPoints: [
-        "备课时间有限，却要不断准备不同程度的题目。",
-        "试过 AI 工具，但生成内容仍需要花很多时间整理。"
+        "想用 AI 减少作文备课时间，却常常只得到零散内容。",
+        "有了范文，还要自己整理教学步骤、视觉规划图和 PPT。",
+        "接触过 AI 工具，但不知道怎样把它完整用进作文教学。"
       ],
-      description: "这是一场以实作为主的教师 Workshop。你会带着自己的教学需要，一步步完成可继续使用的出题流程。",
+      description: "这不是一场介绍更多 AI 工具的讲座。你会跟着 Irene 老师完整实作一次，把一个作文题目一步步发展成参考范文、作文视觉规划图与可以直接上课的教学教材。",
       outcomes: [
-        "一套可以重复使用的 AI 出题提示结构",
-        "一份根据教学需要调整过的练习内容",
-        "检查与修正 AI 输出的方法"
+        "一个可用于课堂的作文题目",
+        "一篇可以继续调整的参考范文",
+        "一份帮助学生组织内容的作文视觉规划图",
+        "一套可以直接用于教学的教材／PPT"
       ],
       curriculum: [
-        "整理教学目标与学生程度",
-        "把出题要求写成清楚提示",
-        "检查、修改并保存可复用版本"
+        "明确作文题目、教学目标与学生程度",
+        "利用 AI 生成并调整参考范文",
+        "从范文整理作文视觉规划图",
+        "把内容整合成可以使用的教学教材／PPT"
       ],
       audience: [
-        "想减少重复备课时间的老师",
-        "已经接触 AI，但还不确定怎样用于教学的老师",
-        "希望带走实际作品，而不是只听工具介绍的老师"
+        "需要准备作文教学内容的老师",
+        "想把 AI 真正用进备课，而不是只认识工具的老师",
+        "希望减少重复工作，并带走一套完整教学成果的老师"
       ]
     }
   },

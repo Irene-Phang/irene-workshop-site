@@ -14,16 +14,116 @@
 
   <header class="site-header">
     <div class="container">
-      <a class="site-name" href="index.html" aria-label="返回 Irene 老师 Workshop 首页">
-        Irene 老师 Workshop
-      </a>
+      <a class="back-link" href="index.html">← 返回主页</a>
     </div>
   </header>
 
-  <main id="main-content" class="site-main container">
-    <h1 class="visually-hidden">Workshop 详情</h1>
+  <main id="main-content" class="site-main workshop-page container">
+    <article data-workshop-detail>
+      <header class="workshop-intro">
+        <p class="workshop-intro__claim" data-detail-claim></p>
+        <h1 data-detail-title></h1>
+        <dl class="workshop-meta">
+          <div>
+            <dt>日期</dt>
+            <dd data-detail-date></dd>
+          </div>
+          <div>
+            <dt>时间</dt>
+            <dd data-detail-time></dd>
+          </div>
+          <div>
+            <dt>形式</dt>
+            <dd data-detail-mode></dd>
+          </div>
+          <div>
+            <dt>报名费</dt>
+            <dd data-detail-price></dd>
+          </div>
+        </dl>
+        <a class="button button--primary workshop-intro__action" href="#registration-form">立即报名</a>
+      </header>
+
+      <section class="detail-section">
+        <h2>你可能遇到这些情况</h2>
+        <ul class="detail-list" data-detail-pain-points></ul>
+      </section>
+
+      <section class="detail-section">
+        <h2>课程说明</h2>
+        <p data-detail-description></p>
+      </section>
+
+      <section class="detail-section">
+        <h2>你会完成什么</h2>
+        <ul class="detail-list" data-detail-outcomes></ul>
+      </section>
+
+      <section class="detail-section">
+        <h2>课程内容</h2>
+        <ol class="detail-list" data-detail-curriculum></ol>
+      </section>
+
+      <section class="detail-section">
+        <h2>适合谁</h2>
+        <ul class="detail-list" data-detail-audience></ul>
+      </section>
+
+      <section class="detail-section">
+        <h2>学员反馈</h2>
+        <div class="detail-testimonials" data-detail-testimonials></div>
+      </section>
+
+      <section class="registration-section" id="registration-form">
+        <h2>报名表</h2>
+
+        <form class="registration-form" data-registration-form novalidate>
+          <div class="form-field">
+            <label for="participant-name">姓名 <span aria-hidden="true">*</span></label>
+            <input id="participant-name" name="name" type="text" autocomplete="name" required>
+            <p class="field-reminder" data-name-reminder></p>
+            <p class="field-note" data-name-note></p>
+          </div>
+
+          <div class="form-field">
+            <label for="participant-whatsapp">WhatsApp <span aria-hidden="true">*</span></label>
+            <input id="participant-whatsapp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" required>
+          </div>
+
+          <div class="form-field">
+            <label for="participant-teaching">任教科目及年级 <span class="optional">选填</span></label>
+            <input id="participant-teaching" name="teaching" type="text">
+          </div>
+
+          <section class="payment-panel" aria-labelledby="payment-title">
+            <h3 id="payment-title">付款资料</h3>
+            <p><strong>报名费：</strong><span data-payment-price></span></p>
+            <div class="qr-placeholder" data-payment-qr role="img" aria-label="DuitNow QR 待更新">DuitNow QR</div>
+            <p><strong>收款人：</strong><span data-payment-recipient></span></p>
+            <p class="field-note" data-payment-note></p>
+          </section>
+
+          <div class="form-field">
+            <label for="payment-proof">付款证明 <span aria-hidden="true">*</span></label>
+            <label class="file-select-label" for="payment-proof" data-file-label>选择付款证明</label>
+            <input class="visually-hidden" id="payment-proof" name="paymentProof" type="file" accept="image/*,.pdf,application/pdf" data-proof-input>
+            <div class="file-status" data-file-status hidden>
+              <span data-proof-name></span>
+              <button class="text-button" type="button" data-remove-proof>删除</button>
+            </div>
+          </div>
+
+          <button class="button button--primary submit-button" type="submit">提交报名</button>
+          <div class="form-message" role="status" aria-live="polite" data-form-message></div>
+        </form>
+
+        <p class="registration-contact">资料有误？<a href="#" data-contact="whatsapp">WhatsApp 联系 Irene</a></p>
+      </section>
+    </article>
   </main>
 
-  <footer class="site-footer" aria-label="页尾"></footer>
+  <footer class="site-footer" aria-label="页尾">
+    <div class="site-footer__inner container" data-footer></div>
+  </footer>
 </body>
 </html>

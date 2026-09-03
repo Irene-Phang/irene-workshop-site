@@ -14,16 +14,24 @@
 
   <header class="site-header">
     <div class="container">
-      <a class="site-name" href="index.html" aria-label="返回 Irene 老师 Workshop 首页">
-        Irene 老师 Workshop
-      </a>
+      <a class="back-link" href="index.html">← 返回主页</a>
     </div>
   </header>
 
   <main id="main-content" class="site-main container">
-    <h1 class="visually-hidden">往期 Workshop</h1>
+    <header class="page-heading">
+      <h1>往期 Workshop</h1>
+    </header>
+
+    <div class="past-workshop-list" data-past-workshop-list></div>
+
+    <div class="page-end-link">
+      <a class="button button--secondary" href="index.html">返回主页</a>
+    </div>
   </main>
 
-  <footer class="site-footer" aria-label="页尾"></footer>
+  <footer class="site-footer" aria-label="页尾">
+    <div class="site-footer__inner container" data-footer></div>
+  </footer>
 </body>
 </html>

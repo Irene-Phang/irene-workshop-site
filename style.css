@@ -411,6 +411,401 @@ textarea {
   font-weight: 700;
 }
 
+.past-workshops,
+.school-workshops {
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+.workshop-slider {
+  display: grid;
+  grid-auto-columns: calc(100% - 2.75rem);
+  grid-auto-flow: column;
+  gap: var(--space-3);
+  overflow-x: auto;
+  padding-block-end: var(--space-3);
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: inline mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+.workshop-slider > * {
+  scroll-snap-align: start;
+}
+
+.view-more-card {
+  display: flex;
+  min-height: 18rem;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: 1.25rem;
+  background: var(--color-surface-soft);
+  color: var(--color-heading);
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+}
+
+.school-card {
+  overflow: hidden;
+  border-radius: 1.25rem;
+  background: var(--color-heading);
+  color: var(--color-surface);
+}
+
+.school-card__image {
+  width: 100%;
+  height: auto;
+}
+
+.school-card__placeholder {
+  display: grid;
+  min-height: 18rem;
+  padding: var(--space-4);
+  background: linear-gradient(145deg, #dce8f2 0%, #b8cede 100%);
+  color: var(--color-heading);
+  place-items: center;
+}
+
+.school-card__body {
+  padding: var(--space-4);
+}
+
+.school-card__title {
+  margin: 0;
+  color: var(--color-surface);
+  font-size: 1.35rem;
+}
+
+.school-card__topic {
+  margin: var(--space-2) 0 0;
+}
+
+.school-card__meta {
+  margin: var(--space-3) 0 0;
+  color: #cfe3f3;
+  font-size: var(--text-small);
+  font-weight: 700;
+}
+
+.site-footer {
+  border-block-start: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.site-footer__inner {
+  padding-block: var(--space-5);
+  text-align: center;
+}
+
+.site-footer__tagline {
+  margin: 0;
+  color: var(--color-heading);
+  font-weight: 700;
+}
+
+.site-footer__links {
+  margin-block-start: var(--space-2);
+  font-size: var(--text-small);
+}
+
+.site-footer__links a[aria-disabled="true"],
+.registration-contact a[aria-disabled="true"] {
+  color: #788592;
+  cursor: not-allowed;
+}
+
+.back-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  color: var(--color-heading);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.page-heading {
+  margin-block-end: var(--space-5);
+}
+
+.page-heading h1,
+.workshop-intro h1 {
+  margin: 0;
+  color: var(--color-heading);
+  font-size: var(--text-large);
+  line-height: 1.3;
+}
+
+.past-workshop-list {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.page-end-link {
+  margin-block-start: var(--space-6);
+}
+
+.page-end-link .button {
+  width: 100%;
+}
+
+.workshop-page {
+  max-width: 50rem;
+}
+
+.workshop-intro {
+  padding-block: var(--space-3) var(--space-6);
+}
+
+.workshop-intro__claim {
+  margin: 0 0 var(--space-3);
+  color: var(--color-accent);
+  font-size: clamp(1.15rem, 5vw, 1.5rem);
+  font-weight: 750;
+  line-height: 1.45;
+}
+
+.workshop-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin-block: var(--space-5);
+}
+
+.workshop-meta div {
+  padding: var(--space-3);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface-soft);
+}
+
+.workshop-meta dt {
+  color: #64717e;
+  font-size: var(--text-small);
+}
+
+.workshop-meta dd {
+  margin: var(--space-1) 0 0;
+  color: var(--color-heading);
+  font-weight: 700;
+}
+
+.workshop-intro__action {
+  width: 100%;
+}
+
+.detail-section {
+  padding-block: var(--space-5);
+}
+
+.detail-section h2,
+.registration-section h2 {
+  margin: 0 0 var(--space-4);
+  color: var(--color-heading);
+  font-size: 1.5rem;
+  line-height: 1.35;
+}
+
+.detail-section p {
+  margin: 0;
+}
+
+.detail-list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding-inline-start: 1.4rem;
+}
+
+.detail-testimonials {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.detail-testimonial {
+  margin: 0;
+  padding: var(--space-4);
+  border-inline-start: 0.25rem solid var(--color-accent);
+  border-radius: 0 var(--radius-medium) var(--radius-medium) 0;
+  background: var(--color-surface);
+}
+
+.detail-testimonial p,
+.detail-testimonial footer {
+  margin: 0;
+}
+
+.detail-testimonial footer {
+  margin-block-start: var(--space-3);
+  font-size: var(--text-small);
+  font-weight: 700;
+}
+
+.registration-section {
+  margin-inline: calc(var(--space-3) * -1);
+  margin-block-start: var(--space-5);
+  padding: var(--space-5) var(--space-3);
+  border-radius: 1.25rem;
+  background: var(--color-surface-soft);
+  scroll-margin-block-start: var(--space-3);
+}
+
+.registration-form {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.form-field {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.form-field > label:first-child {
+  color: var(--color-heading);
+  font-weight: 700;
+}
+
+.optional {
+  color: #64717e;
+  font-size: var(--text-small);
+  font-weight: 400;
+}
+
+.form-field input[type="text"],
+.form-field input[type="tel"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #aebdca;
+  border-radius: var(--radius-small);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.field-reminder,
+.field-note {
+  margin: 0;
+}
+
+.field-reminder {
+  color: var(--color-heading);
+  font-size: var(--text-small);
+  font-weight: 700;
+}
+
+.field-note {
+  color: #596775;
+  font-size: 0.8125rem;
+}
+
+.payment-panel {
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+}
+
+.payment-panel h3,
+.payment-panel p {
+  margin: 0;
+}
+
+.payment-panel p + p {
+  margin-block-start: var(--space-2);
+}
+
+.qr-placeholder {
+  display: grid;
+  width: min(100%, 16rem);
+  min-height: 16rem;
+  margin-block: var(--space-3);
+  border: 1px dashed #aebdca;
+  border-radius: var(--radius-medium);
+  background: var(--color-surface-soft);
+  color: #788592;
+  place-items: center;
+}
+
+.qr-placeholder img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-medium);
+}
+
+.file-select-label {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-small);
+  background: var(--color-surface);
+  color: var(--color-heading);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.file-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-small);
+  background: var(--color-surface);
+  overflow-wrap: anywhere;
+}
+
+.file-status[hidden] {
+  display: none;
+}
+
+.text-button {
+  flex: none;
+  min-height: 2.75rem;
+  padding-inline: var(--space-2);
+  border: 0;
+  background: transparent;
+  color: #9b3e3e;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.submit-button {
+  width: 100%;
+}
+
+.form-message {
+  border-radius: var(--radius-medium);
+}
+
+.form-message--error,
+.form-message--success {
+  padding: var(--space-3);
+}
+
+.form-message--error {
+  background: #fff0f0;
+  color: #842f2f;
+}
+
+.form-message--success {
+  background: #edf7f1;
+  color: #245c3b;
+}
+
+.form-message--success p {
+  margin: var(--space-2) 0 0;
+}
+
+.registration-contact {
+  margin: var(--space-4) 0 0;
+  font-size: var(--text-small);
+  text-align: center;
+}
+
 .is-ready .hero {
   animation: hero-fade-in 400ms ease-out both;
 }
@@ -458,6 +853,21 @@ textarea {
 
   .workshop-card__body {
     padding: var(--space-5);
+  }
+
+  .school-card__body,
+  .registration-section {
+    padding: var(--space-5);
+  }
+
+  .registration-section {
+    margin-inline: 0;
+  }
+
+  .page-end-link .button,
+  .workshop-intro__action,
+  .submit-button {
+    width: auto;
   }
 }
 

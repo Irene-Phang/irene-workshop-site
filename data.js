@@ -73,19 +73,19 @@ const siteData = {
   },
 
   // ---------- 已完成的公开 Workshop ----------
-  // 尚未收到真实课程资料，以下项目清楚标为“资料待更新”。
+  // 资料不完整时清楚标为“待补充”，不要自行猜测。
   // 新增课程时复制一整组 { ... }，完成后把 status 改成 completed。
   pastWorkshops: [
     {
-      id: "past-workshop-01",
-      title: "往期 Workshop 01｜资料待更新",
-      image: "",
-      imageAlt: "往期 Workshop 宣传图待更新",
+      id: "ai-writing-workshop",
+      title: "AI 作文教学实战 Workshop",
+      image: "images/past-ai-writing-workshop.png",
+      imageAlt: "AI 作文教学实战 Workshop 宣传图",
       date: "",
-      dateLabel: "日期待更新",
-      time: "时间待更新",
-      deliveryMode: "形式待更新",
-      summary: "课程简介待更新。",
+      dateLabel: "日期待补充",
+      time: "时间待补充",
+      deliveryMode: "形式待补充",
+      summary: "从一个作文题目，完成一套可以直接上课的作文教材。",
       status: "completed"
     },
     {

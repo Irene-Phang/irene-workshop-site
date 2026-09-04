@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Irene 老师 Workshop 详情与报名">
   <title>Workshop 详情｜Irene 老师</title>
-  <link rel="stylesheet" href="style.css?v=20260903-3">
-  <script src="data.js" defer></script>
-  <script src="script.js?v=20260903-2" defer></script>
+  <link rel="stylesheet" href="style.css?v=20260904-1">
+  <script src="data.js?v=20260904-1" defer></script>
+  <script src="script.js?v=20260904-1" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">跳至主要内容</a>
@@ -41,7 +41,7 @@
             <dd data-detail-price></dd>
           </div>
         </dl>
-        <a class="button button--primary workshop-intro__action" href="#registration-form">立即报名</a>
+        <a class="button button--primary workshop-intro__action" href="#registration-form" data-detail-action>立即报名</a>
       </header>
 
       <section class="detail-section">
@@ -74,7 +74,12 @@
         <div class="detail-testimonials" data-detail-testimonials></div>
       </section>
 
-      <section class="registration-section" id="registration-form">
+      <section class="registration-closed" data-registration-closed hidden>
+        <h2>即将开课</h2>
+        <p>报名尚未开放，确认课程资料后会在这里开放报名。</p>
+      </section>
+
+      <section class="registration-section" id="registration-form" data-registration-section hidden>
         <h2>报名表</h2>
 
         <form class="registration-form" data-registration-form novalidate>

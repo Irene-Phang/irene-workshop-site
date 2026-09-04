@@ -664,6 +664,27 @@ textarea {
   scroll-margin-block-start: var(--space-3);
 }
 
+.registration-closed {
+  margin-block-start: var(--space-5);
+  padding: var(--space-5) var(--space-4);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface-soft);
+  text-align: center;
+}
+
+.registration-closed h2,
+.registration-closed p {
+  margin: 0;
+}
+
+.registration-closed h2 {
+  color: var(--color-heading);
+}
+
+.registration-closed p {
+  margin-block-start: var(--space-2);
+}
+
 .registration-form {
   display: grid;
   gap: var(--space-4);

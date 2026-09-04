@@ -82,7 +82,7 @@ function setupContactMenu() {
 }
 
 const WORKSHOP_STATUS_LABELS = {
-  upcoming: "即将开放",
+  upcoming: "即将开课",
   open: "查看详情并报名",
   full: "报名已满",
   completed: "已完成"
@@ -121,7 +121,8 @@ function createWorkshopCard(workshop) {
   }
 
   title.textContent = workshop.title;
-  schedule.textContent = `${workshop.dateLabel}｜${workshop.time}`;
+  schedule.textContent = [workshop.dateLabel, workshop.time].filter(Boolean).join("｜");
+  schedule.hidden = !schedule.textContent;
   mode.textContent = workshop.deliveryMode;
   summary.textContent = workshop.summary;
   body.append(title, schedule, mode, summary);
@@ -340,18 +341,37 @@ function renderWorkshopDetail() {
 
   const workshop = siteData.currentWorkshop;
   const detailContent = workshop.detail;
+  const registrationIsOpen = workshop.status === "open";
+  const detailAction = document.querySelector("[data-detail-action]");
+  const detailTime = document.querySelector("[data-detail-time]");
+  const detailPrice = document.querySelector("[data-detail-price]");
+  const registrationClosed = document.querySelector("[data-registration-closed]");
+  const registrationSection = document.querySelector("[data-registration-section]");
   document.querySelector("[data-detail-claim]").textContent = detailContent.claim;
   document.querySelector("[data-detail-title]").textContent = workshop.title;
   document.querySelector("[data-detail-date]").textContent = workshop.dateLabel;
-  document.querySelector("[data-detail-time]").textContent = workshop.time;
+  detailTime.textContent = workshop.time;
+  detailTime.closest("div").hidden = !workshop.time;
   document.querySelector("[data-detail-mode]").textContent = workshop.deliveryMode;
-  document.querySelector("[data-detail-price]").textContent = workshop.price;
+  detailPrice.textContent = workshop.price;
+  detailPrice.closest("div").hidden = !registrationIsOpen;
   document.querySelector("[data-detail-description]").textContent = detailContent.description;
   document.querySelector("[data-name-reminder]").textContent = siteData.registration.nameReminder;
   document.querySelector("[data-name-note]").textContent = siteData.registration.nameNote;
   document.querySelector("[data-payment-price]").textContent = workshop.price;
   document.querySelector("[data-payment-recipient]").textContent = siteData.payment.recipientName;
   document.querySelector("[data-payment-note]").textContent = siteData.registration.paymentNote;
+
+  registrationClosed.hidden = registrationIsOpen;
+  registrationSection.hidden = !registrationIsOpen;
+
+  if (!registrationIsOpen) {
+    const status = document.createElement("span");
+    status.className = "button button--disabled workshop-intro__action";
+    status.setAttribute("aria-disabled", "true");
+    status.textContent = WORKSHOP_STATUS_LABELS[workshop.status] || WORKSHOP_STATUS_LABELS.upcoming;
+    detailAction.replaceWith(status);
+  }
 
   fillList("[data-detail-pain-points]", detailContent.painPoints);
   fillList("[data-detail-outcomes]", detailContent.outcomes);

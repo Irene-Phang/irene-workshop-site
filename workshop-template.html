@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Irene 老师 Workshop 详情与报名">
   <title>Workshop 详情｜Irene 老师</title>
-  <link rel="stylesheet" href="style.css?v=20260904-1">
-  <script src="data.js?v=20260904-1" defer></script>
-  <script src="script.js?v=20260904-1" defer></script>
+  <link rel="stylesheet" href="style.css?v=20260904-3">
+  <script src="data.js?v=20260904-3" defer></script>
+  <script src="script.js?v=20260904-3" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">跳至主要内容</a>
@@ -21,57 +21,65 @@
   <main id="main-content" class="site-main workshop-page container">
     <article data-workshop-detail>
       <header class="workshop-intro">
-        <p class="workshop-intro__claim" data-detail-claim></p>
-        <h1 data-detail-title></h1>
-        <dl class="workshop-meta">
-          <div>
-            <dt>日期</dt>
-            <dd data-detail-date></dd>
-          </div>
-          <div>
-            <dt>时间</dt>
-            <dd data-detail-time></dd>
-          </div>
-          <div>
-            <dt>形式</dt>
-            <dd data-detail-mode></dd>
-          </div>
-          <div>
-            <dt>报名费</dt>
-            <dd data-detail-price></dd>
-          </div>
-        </dl>
-        <a class="button button--primary workshop-intro__action" href="#registration-form" data-detail-action>立即报名</a>
+        <div class="workshop-intro__poster" data-detail-poster></div>
+        <div class="workshop-intro__content">
+          <p class="workshop-intro__label" data-detail-label></p>
+          <h1 data-detail-title></h1>
+          <p class="workshop-intro__subtitle" data-detail-subtitle></p>
+          <p class="workshop-intro__claim" data-detail-claim></p>
+          <dl class="workshop-meta">
+            <div>
+              <dt>日期</dt>
+              <dd data-detail-date></dd>
+            </div>
+            <div>
+              <dt>时间</dt>
+              <dd data-detail-time></dd>
+            </div>
+            <div>
+              <dt>形式</dt>
+              <dd data-detail-mode></dd>
+            </div>
+            <div>
+              <dt>时长</dt>
+              <dd data-detail-duration></dd>
+            </div>
+          </dl>
+          <div data-detail-pricing></div>
+          <a class="button button--primary workshop-intro__action" href="#registration-form" data-detail-action>立即报名</a>
+        </div>
       </header>
 
       <section class="detail-section">
-        <h2>你可能遇到这些情况</h2>
+        <h2 data-detail-pain-title></h2>
         <ul class="detail-list" data-detail-pain-points></ul>
       </section>
 
       <section class="detail-section">
-        <h2>课程说明</h2>
+        <h2 data-detail-description-title></h2>
         <p data-detail-description></p>
       </section>
 
       <section class="detail-section">
-        <h2>你会完成什么</h2>
+        <h2 data-detail-outcomes-title></h2>
         <ul class="detail-list" data-detail-outcomes></ul>
+        <p class="detail-note" data-detail-outcome-note hidden></p>
       </section>
 
       <section class="detail-section">
-        <h2>课程内容</h2>
-        <ol class="detail-list" data-detail-curriculum></ol>
-      </section>
-
-      <section class="detail-section">
-        <h2>适合谁</h2>
+        <h2 data-detail-audience-title></h2>
         <ul class="detail-list" data-detail-audience></ul>
+        <p class="detail-note" data-detail-audience-note hidden></p>
       </section>
 
-      <section class="detail-section">
+      <section class="detail-section" data-detail-testimonials-section>
         <h2>学员反馈</h2>
         <div class="detail-testimonials" data-detail-testimonials></div>
+      </section>
+
+      <section class="detail-section" data-detail-faq-section>
+        <h2>常见问题</h2>
+        <div class="faq-list" data-detail-faqs></div>
       </section>
 
       <section class="registration-closed" data-registration-closed hidden>
@@ -80,7 +88,10 @@
       </section>
 
       <section class="registration-section" id="registration-form" data-registration-section hidden>
-        <h2>报名表</h2>
+        <div class="registration-section__intro">
+          <h2 data-detail-cta-title></h2>
+          <p data-detail-cta-support></p>
+        </div>
 
         <form class="registration-form" data-registration-form novalidate>
           <div class="form-field">
@@ -102,7 +113,7 @@
 
           <section class="payment-panel" aria-labelledby="payment-title">
             <h3 id="payment-title">付款资料</h3>
-            <p><strong>报名费：</strong><span data-payment-price></span></p>
+            <div data-payment-pricing></div>
             <div class="qr-placeholder" data-payment-qr role="img" aria-label="DuitNow QR 待更新">DuitNow QR</div>
             <p><strong>收款人：</strong><span data-payment-recipient></span></p>
             <p class="field-note" data-payment-note></p>

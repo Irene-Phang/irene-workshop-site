@@ -1,33 +1,51 @@
 # Irene Workshop 网站｜日常更新说明
 
-日常更新只需要打开 `data.js`。除非要修改版面，否则不要改 HTML。
+日常更新只需要打开 `data.js`。除非要修改版面，否则不要改 HTML、CSS 或 JavaScript。
 
-## 1. 更新最新 Workshop
+## 1. 指定首页主推 Workshop
 
 找到：
 
 ```javascript
-currentWorkshop: {
+featuredWorkshopId: "ai-exam-language-2026-09",
 ```
 
-修改这一组里面的课程名称、图片、日期、时间、形式、简介、状态、详情页链接和价格。
+把引号里的文字改成要主推课程的 `id`。这个 `id` 必须与 `workshops` 里面某一场课程完全相同。
 
-同一组里的 `detail` 是报名详情页内容，可修改课程主张、痛点、课程说明、学习成果、课程内容和适合对象。首页与报名页会自动使用同一场课程资料。
+## 2. 新增或修改 Workshop
 
-图片先放进 `images/`，再这样填写：
+找到：
+
+```javascript
+workshops: [
+```
+
+每一场课程都放在这个清单里。复制现有的一整组课程资料后再修改，其中：
+
+- `id`：课程内部识别名称，不能与其他课程重复。
+- `slug`：详情页网址使用的简短名称，不能重复。
+- `title`、`label`、`subtitle`：课程名称与公开文案。
+- `image`：宣传图路径，图片要先放进 `images/`。
+- `date`、`time`、`mode`、`duration`：日期、时间、形式和时长。
+- `detailUrl`：必须使用该课程的 `slug`，例如 `workshop-template.html?workshop=ai-exam-language`。
+- `registrationUrl`：目前保留空白；以后接好正式报名系统才填写。
+- `detail`：报名详情页的公开内容，例如课程主张、痛点、学习成果、适合对象和 FAQ。
+
+图片填写方式：
 
 ```javascript
 image: "images/图片名称.png",
 ```
 
-## 2. 修改报名状态
+## 3. 修改报名状态
 
 只修改 `status` 后面的英文：
 
-- `upcoming`：即将开放，不能点击
-- `open`：查看详情并报名，可以点击
-- `full`：报名已满，不能点击
-- `completed`：已完成，不能点击
+- `coming_soon`：即将开课，不开放报名。
+- `open`：开放查看详情和报名。
+- `full`：报名已满。
+- `closed`：报名已截止。
+- `ended`：课程已结束。
 
 例如课程开放报名：
 
@@ -35,21 +53,37 @@ image: "images/图片名称.png",
 status: "open",
 ```
 
-## 3. 课程结束后移到往期 Workshop
+## 4. 设置早鸟价和正价
 
-1. 复制完整的 `currentWorkshop` 课程资料。
-2. 把它贴到 `pastWorkshops: [` 下面。
-3. 加上一个不重复的 `id`。
-4. 删除 `detailUrl` 和 `price`。
-5. 把状态改成：
+价格和早鸟截止日期只在课程资料里设置一次：
+
+```javascript
+earlyBirdPrice: 99,
+regularPrice: 119,
+earlyBirdDeadline: "2026-09-13",
+```
+
+截止日当天仍会显示早鸟价 RM99 和正价 RM119；从第二天开始，网页会自动只显示正价 RM119。日期格式必须是 `年-月-日`。
+
+没有早鸟优惠时这样填写：
+
+```javascript
+earlyBirdPrice: null,
+regularPrice: 119,
+earlyBirdDeadline: "",
+```
+
+## 5. 课程结束后加入往期 Workshop
+
+在 `pastWorkshops` 最前面新增一组，只需保留宣传图和必要识别资料。状态使用：
 
 ```javascript
 status: "completed"
 ```
 
-首页会自动显示最近 3–4 场，完整列表会自动出现在 `past-workshops.html`。
+首页会自动显示最近几场，完整列表会自动出现在 `past-workshops.html`。
 
-## 4. 新增或修改学员反馈
+## 6. 新增或修改学员反馈
 
 找到：
 
@@ -68,20 +102,16 @@ testimonials: [
 
 没有获得公开姓名授权时，只保留姓氏并加 `XX 老师`。
 
-## 5. 更新 School Workshop
+课程里面的 `testimonialIndexes` 决定详情页显示哪几条反馈；没有该课程的真实反馈时使用空清单 `[]`。
 
-找到：
+## 7. 更新 School Workshop
 
-```javascript
-schoolWorkshops: [
-```
+找到 `schoolWorkshops`，修改活动名称、主题、月份和图片。状态只使用：
 
-修改活动名称、主题、月份和图片。状态只使用：
+- `preparing`：筹备中。
+- `completed`：已举办。
 
-- `preparing`：筹备中
-- `completed`：已举办
-
-## 6. 更新 WhatsApp 和 Facebook
+## 8. 更新 WhatsApp 和 Facebook
 
 找到 `contact`，填入完整网址：
 
@@ -92,7 +122,7 @@ contact: {
 },
 ```
 
-## 7. 更新报名费、DuitNow QR 和收款人
+## 9. 更新 DuitNow QR 和收款人
 
 找到 `payment`：
 
@@ -103,11 +133,12 @@ payment: {
 },
 ```
 
-付款二维码图片同样先放进 `images/`。
+付款二维码图片同样先放进 `images/`。课程价格不要写在 `payment`，只写在对应 Workshop 资料里。
 
 ## 保存前检查
 
 - 英文双引号 `" "` 和逗号不要删除。
 - 图片名称必须和 `images/` 里的文件完全相同。
 - 没有真实资料时保留“资料待更新”，不要发布虚构资料。
-- 修改后刷新网页，检查手机预览是否正确。
+- 修改后刷新网页，检查 375px、390px 和 430px 手机宽度。
+- 正式收款前，先确认报名表已经连接真实的资料保存系统。

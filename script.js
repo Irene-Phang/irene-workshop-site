@@ -1,3 +1,66 @@
+function getMalaysiaDateKey(date = new Date()) {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Kuala_Lumpur",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).formatToParts(date);
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+
+  return `${values.year}-${values.month}-${values.day}`;
+}
+
+function formatDateKey(dateKey) {
+  const [year, month, day] = dateKey.split("-");
+  return `${Number(day)}/${Number(month)}/${year}`;
+}
+
+function getWorkshopPriceState(workshop, dateKey = getMalaysiaDateKey()) {
+  const earlyBirdIsAvailable = Boolean(
+    workshop.earlyBirdPrice &&
+    workshop.earlyBirdDeadline &&
+    dateKey <= workshop.earlyBirdDeadline
+  );
+
+  if (earlyBirdIsAvailable) {
+    return {
+      currentPrice: workshop.earlyBirdPrice,
+      isEarlyBird: true,
+      mainLabel: "早鸟优惠",
+      mainPrice: `RM${workshop.earlyBirdPrice}`,
+      deadlineLabel: `${formatDateKey(workshop.earlyBirdDeadline)} 前报名`,
+      regularLabel: "课程正价",
+      regularPrice: `RM${workshop.regularPrice}`
+    };
+  }
+
+  return {
+    currentPrice: workshop.regularPrice,
+    isEarlyBird: false,
+    mainLabel: "报名费",
+    mainPrice: `RM${workshop.regularPrice}`,
+    deadlineLabel: "",
+    regularLabel: "",
+    regularPrice: ""
+  };
+}
+
+function getFeaturedWorkshop(data) {
+  if (Array.isArray(data.workshops)) {
+    return data.workshops.find((workshop) => workshop.id === data.featuredWorkshopId) || data.workshops[0] || null;
+  }
+
+  return data.currentWorkshop || null;
+}
+
+function getWorkshopBySlug(data, slug) {
+  if (slug && Array.isArray(data.workshops)) {
+    return data.workshops.find((workshop) => workshop.slug === slug) || getFeaturedWorkshop(data);
+  }
+
+  return getFeaturedWorkshop(data);
+}
+
 function renderHero() {
   const hero = document.querySelector('[data-section="hero"]');
 
@@ -82,17 +145,53 @@ function setupContactMenu() {
 }
 
 const WORKSHOP_STATUS_LABELS = {
-  upcoming: "即将开课",
+  coming_soon: "即将开课",
   open: "查看详情并报名",
   full: "报名已满",
+  closed: "报名截止",
+  ended: "课程已结束",
+  upcoming: "即将开课",
   completed: "已完成"
 };
+
+function createWorkshopPriceBlock(workshop, className = "workshop-price") {
+  const price = getWorkshopPriceState(workshop);
+  const container = document.createElement("div");
+  const main = document.createElement("p");
+  const mainLabel = document.createElement("span");
+  const mainPrice = document.createElement("strong");
+
+  container.className = className;
+  container.dataset.priceMode = price.isEarlyBird ? "early-bird" : "regular";
+  main.className = `${className}__main`;
+  mainLabel.textContent = price.mainLabel;
+  mainPrice.textContent = price.mainPrice;
+  main.append(mainLabel, mainPrice);
+  container.append(main);
+
+  if (price.deadlineLabel) {
+    const deadline = document.createElement("p");
+    deadline.className = `${className}__deadline`;
+    deadline.textContent = price.deadlineLabel;
+    container.append(deadline);
+  }
+
+  if (price.regularPrice) {
+    const regular = document.createElement("p");
+    regular.className = `${className}__regular`;
+    regular.textContent = `${price.regularLabel} ${price.regularPrice}`;
+    container.append(regular);
+  }
+
+  return container;
+}
 
 function createWorkshopCard(workshop) {
   const card = document.createElement("article");
   const media = document.createElement("div");
   const body = document.createElement("div");
   const title = document.createElement("h3");
+  const label = document.createElement("p");
   const schedule = document.createElement("p");
   const mode = document.createElement("p");
   const summary = document.createElement("p");
@@ -101,6 +200,7 @@ function createWorkshopCard(workshop) {
   media.className = "workshop-card__media";
   body.className = "workshop-card__body";
   title.className = "workshop-card__title";
+  label.className = "workshop-card__label";
   schedule.className = "workshop-card__schedule";
   mode.className = "workshop-card__mode";
   summary.className = "workshop-card__summary";
@@ -120,12 +220,18 @@ function createWorkshopCard(workshop) {
     media.append(placeholder);
   }
 
+  label.textContent = workshop.label || "";
+  label.hidden = !label.textContent;
   title.textContent = workshop.title;
   schedule.textContent = [workshop.dateLabel, workshop.time].filter(Boolean).join("｜");
   schedule.hidden = !schedule.textContent;
   mode.textContent = workshop.deliveryMode;
   summary.textContent = workshop.summary;
-  body.append(title, schedule, mode, summary);
+  body.append(label, title, schedule, mode, summary);
+
+  if (workshop.regularPrice && workshop.status === "open") {
+    body.append(createWorkshopPriceBlock(workshop));
+  }
 
   if (workshop.status === "open" && workshop.detailUrl) {
     const action = document.createElement("a");
@@ -137,7 +243,7 @@ function createWorkshopCard(workshop) {
     const status = document.createElement("span");
     status.className = "button button--disabled workshop-card__action";
     status.setAttribute("aria-disabled", "true");
-    status.textContent = WORKSHOP_STATUS_LABELS[workshop.status] || WORKSHOP_STATUS_LABELS.upcoming;
+    status.textContent = WORKSHOP_STATUS_LABELS[workshop.status] || WORKSHOP_STATUS_LABELS.coming_soon;
     body.append(status);
   }
 
@@ -149,11 +255,16 @@ function renderCurrentWorkshop() {
   const section = document.querySelector('[data-section="current-workshop"]');
   const container = document.querySelector("[data-current-workshop]");
 
-  if (!section || !container || typeof siteData === "undefined" || !siteData.currentWorkshop) {
+  if (!section || !container || typeof siteData === "undefined") {
     return;
   }
 
-  container.replaceChildren(createWorkshopCard(siteData.currentWorkshop));
+  const workshop = getFeaturedWorkshop(siteData);
+  if (!workshop) {
+    return;
+  }
+
+  container.replaceChildren(createWorkshopCard(workshop));
   section.hidden = false;
 }
 
@@ -332,6 +443,29 @@ function fillList(selector, items) {
   }));
 }
 
+function renderFaqs(items) {
+  const container = document.querySelector("[data-detail-faqs]");
+  const section = document.querySelector("[data-detail-faq-section]");
+
+  if (!container || !section || !Array.isArray(items)) {
+    return;
+  }
+
+  const faqs = items.map((item) => {
+    const details = document.createElement("details");
+    const question = document.createElement("summary");
+    const answer = document.createElement("p");
+    details.className = "faq-item";
+    question.textContent = item.question;
+    answer.textContent = item.answer;
+    details.append(question, answer);
+    return details;
+  });
+
+  container.replaceChildren(...faqs);
+  section.hidden = faqs.length === 0;
+}
+
 function renderWorkshopDetail() {
   const detail = document.querySelector("[data-workshop-detail]");
 
@@ -339,26 +473,58 @@ function renderWorkshopDetail() {
     return;
   }
 
-  const workshop = siteData.currentWorkshop;
+  const params = new URLSearchParams(window.location.search);
+  const workshop = getWorkshopBySlug(siteData, params.get("workshop"));
+  if (!workshop) {
+    return;
+  }
+
   const detailContent = workshop.detail;
   const registrationIsOpen = workshop.status === "open";
   const detailAction = document.querySelector("[data-detail-action]");
   const detailTime = document.querySelector("[data-detail-time]");
-  const detailPrice = document.querySelector("[data-detail-price]");
+  const detailDuration = document.querySelector("[data-detail-duration]");
   const registrationClosed = document.querySelector("[data-registration-closed]");
   const registrationSection = document.querySelector("[data-registration-section]");
+  const poster = document.querySelector("[data-detail-poster]");
+  const outcomeNote = document.querySelector("[data-detail-outcome-note]");
+  const audienceNote = document.querySelector("[data-detail-audience-note]");
+
+  document.title = `${workshop.title}｜Irene 老师`;
+  if (workshop.image) {
+    const image = document.createElement("img");
+    image.src = workshop.image;
+    image.alt = workshop.imageAlt;
+    poster.replaceChildren(image);
+  }
+
+  document.querySelector("[data-detail-label]").textContent = workshop.label || "";
   document.querySelector("[data-detail-claim]").textContent = detailContent.claim;
   document.querySelector("[data-detail-title]").textContent = workshop.title;
+  document.querySelector("[data-detail-subtitle]").textContent = workshop.subtitle || workshop.summary;
   document.querySelector("[data-detail-date]").textContent = workshop.dateLabel;
   detailTime.textContent = workshop.time;
   detailTime.closest("div").hidden = !workshop.time;
   document.querySelector("[data-detail-mode]").textContent = workshop.deliveryMode;
-  detailPrice.textContent = workshop.price;
-  detailPrice.closest("div").hidden = !registrationIsOpen;
+  detailDuration.textContent = workshop.duration || "";
+  detailDuration.closest("div").hidden = !workshop.duration;
+  const detailPricing = document.querySelector("[data-detail-pricing]");
+  detailPricing.replaceChildren(createWorkshopPriceBlock(workshop, "detail-price"));
+  detailPricing.hidden = !registrationIsOpen;
+  document.querySelector("[data-detail-pain-title]").textContent = detailContent.painPointsTitle;
+  document.querySelector("[data-detail-description-title]").textContent = detailContent.descriptionTitle;
+  document.querySelector("[data-detail-outcomes-title]").textContent = detailContent.outcomesTitle;
+  document.querySelector("[data-detail-audience-title]").textContent = detailContent.audienceTitle;
   document.querySelector("[data-detail-description]").textContent = detailContent.description;
+  outcomeNote.textContent = detailContent.outcomeNote || "";
+  outcomeNote.hidden = !detailContent.outcomeNote;
+  audienceNote.textContent = detailContent.audienceNote || "";
+  audienceNote.hidden = !detailContent.audienceNote;
+  document.querySelector("[data-detail-cta-title]").textContent = detailContent.ctaTitle || "准备好开始实作了吗？";
+  document.querySelector("[data-detail-cta-support]").textContent = detailContent.ctaSupport || "";
   document.querySelector("[data-name-reminder]").textContent = siteData.registration.nameReminder;
   document.querySelector("[data-name-note]").textContent = siteData.registration.nameNote;
-  document.querySelector("[data-payment-price]").textContent = workshop.price;
+  document.querySelector("[data-payment-pricing]").replaceChildren(createWorkshopPriceBlock(workshop, "payment-price"));
   document.querySelector("[data-payment-recipient]").textContent = siteData.payment.recipientName;
   document.querySelector("[data-payment-note]").textContent = siteData.registration.paymentNote;
 
@@ -369,17 +535,21 @@ function renderWorkshopDetail() {
     const status = document.createElement("span");
     status.className = "button button--disabled workshop-intro__action";
     status.setAttribute("aria-disabled", "true");
-    status.textContent = WORKSHOP_STATUS_LABELS[workshop.status] || WORKSHOP_STATUS_LABELS.upcoming;
+    status.textContent = WORKSHOP_STATUS_LABELS[workshop.status] || WORKSHOP_STATUS_LABELS.coming_soon;
     detailAction.replaceWith(status);
   }
 
   fillList("[data-detail-pain-points]", detailContent.painPoints);
   fillList("[data-detail-outcomes]", detailContent.outcomes);
-  fillList("[data-detail-curriculum]", detailContent.curriculum);
   fillList("[data-detail-audience]", detailContent.audience);
+  renderFaqs(detailContent.faqs);
 
   const testimonialContainer = document.querySelector("[data-detail-testimonials]");
-  const testimonials = siteData.testimonials.slice(0, 3).map((testimonial) => {
+  const testimonialSection = document.querySelector("[data-detail-testimonials-section]");
+  const selectedTestimonials = (workshop.testimonialIndexes || [])
+    .map((index) => siteData.testimonials[index])
+    .filter(Boolean);
+  const testimonials = selectedTestimonials.map((testimonial) => {
     const card = document.createElement("blockquote");
     const quote = document.createElement("p");
     const author = document.createElement("footer");
@@ -390,6 +560,7 @@ function renderWorkshopDetail() {
     return card;
   });
   testimonialContainer.replaceChildren(...testimonials);
+  testimonialSection.hidden = testimonials.length === 0;
 
   const qr = document.querySelector("[data-payment-qr]");
   if (siteData.payment.duitNowQrImage) {

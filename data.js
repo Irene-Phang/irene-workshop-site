@@ -33,47 +33,132 @@ const siteData = {
     facebook: "https://www.facebook.com/share/1BpprK2FiH/"
   },
 
-  // ---------- 首页目前主推的公开 Workshop ----------
-  // status 只填写：upcoming、open、full、completed
-  currentWorkshop: {
-    title: "AI 作文教学实战 Workshop｜第二场",
-    image: "images/ai-writing-workshop-session-2.png",
-    imageAlt: "AI 作文教学实战 Workshop 第二场宣传图",
-    date: "2026-10",
-    dateLabel: "10月",
-    time: "",
-    deliveryMode: "线上",
-    summary: "从一个作文题目，完成一套可以直接上课的作文教学教材。",
-    status: "upcoming",
-    detailUrl: "workshop-template.html",
-    price: "RM89",
-    detail: {
-      claim: "2小时，跟着我完整实作一次",
-      painPoints: [
-        "想用 AI 减少作文备课时间，却常常只得到零散内容。",
-        "有了范文，还要自己整理教学步骤、视觉规划图和 PPT。",
-        "接触过 AI 工具，但不知道怎样把它完整用进作文教学。"
-      ],
-      description: "这不是一场介绍更多 AI 工具的讲座。你会跟着 Irene 老师完整实作一次，把一个作文题目一步步发展成参考范文、作文视觉规划图与可以直接上课的教学教材。",
-      outcomes: [
-        "一个可用于课堂的作文题目",
-        "一篇可以继续调整的参考范文",
-        "一份帮助学生组织内容的作文视觉规划图",
-        "一套可以直接用于教学的教材／PPT"
-      ],
-      curriculum: [
-        "明确作文题目、教学目标与学生程度",
-        "利用 AI 生成并调整参考范文",
-        "从范文整理作文视觉规划图",
-        "把内容整合成可以使用的教学教材／PPT"
-      ],
-      audience: [
-        "需要准备作文教学内容的老师",
-        "想把 AI 真正用进备课，而不是只认识工具的老师",
-        "希望减少重复工作，并带走一套完整教学成果的老师"
-      ]
+  // ---------- 公开 Workshop ----------
+  // 首页显示 featuredWorkshopId 指定的课程。
+  // status 可填写：coming_soon、open、full、closed、ended。
+  featuredWorkshopId: "ai-exam-language-2026-09",
+  workshops: [
+    {
+      id: "ai-writing-workshop-2",
+      slug: "ai-writing-workshop-2",
+      title: "AI 作文教学实战 Workshop｜第二场",
+      label: "AI 作文教学实战｜第二场",
+      subtitle: "从一个作文题目，完成一套可以直接上课的作文教学教材。",
+      image: "images/ai-writing-workshop-session-2.png",
+      imageAlt: "AI 作文教学实战 Workshop 第二场宣传图",
+      date: "2026-10",
+      dateLabel: "10月",
+      time: "",
+      duration: "2小时",
+      deliveryMode: "线上",
+      summary: "从一个作文题目，完成一套可以直接上课的作文教学教材。",
+      earlyBirdPrice: null,
+      regularPrice: 89,
+      earlyBirdDeadline: "",
+      status: "coming_soon",
+      detailUrl: "workshop-template.html?workshop=ai-writing-workshop-2",
+      registrationUrl: "",
+      testimonialIndexes: [0, 1, 2],
+      detail: {
+        claim: "2小时，跟着我完整实作一次",
+        painPointsTitle: "作文备课时，你可能遇到这些情况",
+        descriptionTitle: "这场 Workshop 会怎样进行",
+        outcomesTitle: "你会完成什么",
+        audienceTitle: "适合谁",
+        painPoints: [
+          "想用 AI 减少作文备课时间，却常常只得到零散内容。",
+          "有了范文，还要自己整理教学步骤、视觉规划图和 PPT。",
+          "接触过 AI 工具，但不知道怎样把它完整用进作文教学。"
+        ],
+        description: "这不是一场介绍更多 AI 工具的讲座。你会跟着 Irene 老师完整实作一次，把一个作文题目一步步发展成参考范文、作文视觉规划图与可以直接上课的教学教材。",
+        outcomes: [
+          "一个可用于课堂的作文题目",
+          "一篇可以继续调整的参考范文",
+          "一份帮助学生组织内容的作文视觉规划图",
+          "一套可以直接用于教学的教材／PPT"
+        ],
+        audience: [
+          "需要准备作文教学内容的老师",
+          "想把 AI 真正用进备课，而不是只认识工具的老师",
+          "希望减少重复工作，并带走一套完整教学成果的老师"
+        ],
+        faqs: []
+      }
+    },
+    {
+      id: "ai-exam-language-2026-09",
+      slug: "ai-exam-language",
+      title: "AI 出卷实战 WORKSHOP",
+      label: "语文科｜AI 自主出卷实战",
+      subtitle: "从教材到完整考卷，一步一步带你做",
+      image: "images/ai-exam-language-workshop.png",
+      imageAlt: "语文科 AI 出卷实战 Workshop 宣传图",
+      date: "2026-09-15",
+      dateLabel: "15 September 2026",
+      time: "8:00 PM – 10:00 PM",
+      duration: "2小时",
+      deliveryMode: "Online Workshop",
+      summary: "从教材到完整考卷，一步一步带你做。",
+      earlyBirdPrice: 99,
+      regularPrice: 119,
+      earlyBirdDeadline: "2026-09-13",
+      status: "open",
+      detailUrl: "workshop-template.html?workshop=ai-exam-language",
+      registrationUrl: "",
+      audience: "Bahasa Melayu / English / 华文教师",
+      testimonialIndexes: [],
+      detail: {
+        claim: "不是叫 AI 随便出题，而是让 AI 先读懂你教过什么。",
+        painPointsTitle: "出一份考卷，真正花时间的，往往不是“打题目”",
+        descriptionTitle: "让 AI 真正成为你的出卷助手",
+        outcomesTitle: "课堂会得到什么",
+        audienceTitle: "适合谁",
+        painPoints: [
+          "为了找适合教学范围和学生程度的题目，需要翻很多参考资料。",
+          "找到题目以后，还要筛选、修改、重新打字和检查。",
+          "不同题型与答案需要反复校对，很容易占用大量时间。",
+          "AI 会出题，却不一定知道老师真正教过什么。"
+        ],
+        description: "这是一场给语文老师的 AI 出卷实作课。课堂会使用老师自己的教材，一步一步练习怎样把 AI 应用在出卷工作中，减少找题、筛题、重复修改和校对所花的时间。即使是 AI 初学者，也可以跟着完成。",
+        outcomes: [
+          "AI 协助整理考试内容",
+          "实作不同类型的考题",
+          "完成考题＋教师答案参考"
+        ],
+        outcomeNote: "课堂将完成约 3–5 个代表性的考试内容，让老师掌握方法后，继续应用到自己的完整考卷。",
+        audience: [
+          "Bahasa Melayu、English 或华文教师",
+          "小学或中学教师",
+          "需要准备课堂测验、单元评估、校内自主命题、练习与评量内容的老师"
+        ],
+        audienceNote: "课程主要聚焦老师可自行设计的测验、评估与校内自主命题；如考试必须严格遵循官方固定格式，仍应以相关官方规定为准。",
+        ctaTitle: "准备好让 AI 帮你少花一点时间出卷了吗？",
+        ctaSupport: "Bahasa Melayu / English / 华文教师适用",
+        faqs: [
+          {
+            question: "不会使用 AI，可以参加吗？",
+            answer: "可以。这场 Workshop 以实际操作为主，会一步一步带老师完成，适合 AI 初学者。"
+          },
+          {
+            question: "需要准备什么？",
+            answer: "准备自己平时使用的教材即可。其他课前准备会在报名后说明。"
+          },
+          {
+            question: "课堂会完成整份考卷吗？",
+            answer: "课堂会完成约 3–5 个代表性的考试内容，重点是掌握操作方法。学会之后，可以继续应用到自己的完整考卷。"
+          },
+          {
+            question: "适合哪些科目？",
+            answer: "这次 Workshop 主攻语文科：Bahasa Melayu、English、华文。"
+          },
+          {
+            question: "小学和中学都可以吗？",
+            answer: "可以。课程主要针对老师可自行设计的课堂测验、评估与校内自主命题；若考试必须严格遵循官方固定格式，仍需以相关官方考试规定为准。"
+          }
+        ]
+      }
     }
-  },
+  ],
 
   // ---------- 已完成的公开 Workshop ----------
   // 资料不完整时清楚标为“待补充”，不要自行猜测。

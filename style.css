@@ -340,6 +340,13 @@ textarea {
   padding: var(--space-4);
 }
 
+.workshop-card__label {
+  margin: 0 0 var(--space-2);
+  color: var(--color-accent);
+  font-size: var(--text-small);
+  font-weight: 750;
+}
+
 .workshop-card__title {
   margin: 0 0 var(--space-3);
   color: var(--color-heading);
@@ -362,6 +369,53 @@ textarea {
 
 .workshop-card__summary {
   margin: var(--space-3) 0 0;
+}
+
+.workshop-price {
+  display: grid;
+  gap: 0.15rem;
+  margin-block-start: var(--space-4);
+  padding: var(--space-3);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface-soft);
+}
+
+.workshop-price p,
+.detail-price p,
+.payment-price p {
+  margin: 0;
+}
+
+.workshop-price__main,
+.detail-price__main,
+.payment-price__main {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  color: var(--color-heading);
+}
+
+.workshop-price__main strong,
+.detail-price__main strong,
+.payment-price__main strong {
+  color: var(--color-accent);
+  font-size: 1.75rem;
+  line-height: 1.2;
+}
+
+.workshop-price__deadline,
+.detail-price__deadline,
+.payment-price__deadline {
+  color: var(--color-accent);
+  font-size: var(--text-small);
+  font-weight: 700;
+}
+
+.workshop-price__regular,
+.detail-price__regular,
+.payment-price__regular {
+  color: #64717e;
+  font-size: var(--text-small);
 }
 
 .workshop-card__action {
@@ -572,8 +626,29 @@ textarea {
   padding-block: var(--space-3) var(--space-6);
 }
 
+.workshop-intro__poster {
+  overflow: hidden;
+  margin-block-end: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: 1.25rem;
+  background: var(--color-surface);
+}
+
+.workshop-intro__label {
+  margin: 0 0 var(--space-2);
+  color: var(--color-accent);
+  font-size: var(--text-small);
+  font-weight: 750;
+}
+
+.workshop-intro__subtitle {
+  margin: var(--space-3) 0 0;
+  color: var(--color-heading);
+  font-weight: 700;
+}
+
 .workshop-intro__claim {
-  margin: 0 0 var(--space-3);
+  margin: var(--space-4) 0 0;
   color: var(--color-accent);
   font-size: clamp(1.15rem, 5vw, 1.5rem);
   font-weight: 750;
@@ -606,6 +681,21 @@ textarea {
 
 .workshop-intro__action {
   width: 100%;
+  margin-block-start: var(--space-4);
+}
+
+.detail-price,
+.payment-price {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+}
+
+.detail-price__main strong {
+  font-size: 2rem;
 }
 
 .detail-section {
@@ -622,6 +712,14 @@ textarea {
 
 .detail-section p {
   margin: 0;
+}
+
+.detail-section .detail-note {
+  margin-block-start: var(--space-4);
+  padding: var(--space-3);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface-soft);
+  font-size: var(--text-small);
 }
 
 .detail-list {
@@ -647,6 +745,28 @@ textarea {
 .detail-testimonial p,
 .detail-testimonial footer {
   margin: 0;
+}
+
+.faq-list {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.faq-item {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+}
+
+.faq-item summary {
+  padding: var(--space-3);
+  color: var(--color-heading);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.faq-item p {
+  padding: 0 var(--space-3) var(--space-3);
 }
 
 .detail-testimonial footer {
@@ -688,6 +808,14 @@ textarea {
 .registration-form {
   display: grid;
   gap: var(--space-4);
+}
+
+.registration-section__intro {
+  margin-block-end: var(--space-5);
+}
+
+.registration-section__intro p {
+  margin: 0;
 }
 
 .form-field {
@@ -886,6 +1014,17 @@ textarea {
 
   .workshop-card__body {
     padding: var(--space-5);
+  }
+
+  .workshop-intro {
+    display: grid;
+    grid-template-columns: minmax(18rem, 0.9fr) minmax(0, 1.1fr);
+    align-items: start;
+    gap: var(--space-5);
+  }
+
+  .workshop-intro__poster {
+    margin-block-end: 0;
   }
 
   .school-card__body,

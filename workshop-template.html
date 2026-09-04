@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Irene 老师 Workshop 详情与报名">
   <title>Workshop 详情｜Irene 老师</title>
-  <link rel="stylesheet" href="style.css?v=20260904-3">
-  <script src="data.js?v=20260904-3" defer></script>
-  <script src="script.js?v=20260904-3" defer></script>
+  <link rel="stylesheet" href="style.css?v=20260904-4">
+  <script src="data.js?v=20260904-4" defer></script>
+  <script src="registration.js?v=20260904-4" defer></script>
+  <script src="script.js?v=20260904-4" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">跳至主要内容</a>
@@ -122,12 +123,19 @@
           <div class="form-field">
             <label for="payment-proof">付款证明 <span aria-hidden="true">*</span></label>
             <label class="file-select-label" for="payment-proof" data-file-label>选择付款证明</label>
-            <input class="visually-hidden" id="payment-proof" name="paymentProof" type="file" accept="image/*,.pdf,application/pdf" data-proof-input>
+            <input class="visually-hidden" id="payment-proof" name="paymentProof" type="file" accept=".jpg,.jpeg,.png,.webp,.pdf,image/jpeg,image/png,image/webp,application/pdf" data-proof-input>
             <div class="file-status" data-file-status hidden>
               <span data-proof-name></span>
               <button class="text-button" type="button" data-remove-proof>删除</button>
             </div>
           </div>
+
+          <div class="honeypot" aria-hidden="true">
+            <label for="company-website">Website</label>
+            <input id="company-website" name="companyWebsite" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <iframe class="registration-response-frame" name="registration-response" data-registration-response-frame title="报名提交结果" hidden></iframe>
 
           <button class="button button--primary submit-button" type="submit">提交报名</button>
           <div class="form-message" role="status" aria-live="polite" data-form-message></div>

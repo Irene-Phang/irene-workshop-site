@@ -78,3 +78,81 @@ test("trusts only the expected iframe and nonce", () => {
   assert.equal(Registration.isTrustedResponse({ ...validEvent, source: {} }, iframeWindow, "nonce-1"), false);
   assert.equal(Registration.isTrustedResponse({ ...validEvent, data: { ...validEvent.data, nonce: "wrong" } }, iframeWindow, "nonce-1"), false);
 });
+
+function createControllerHarness(endpoint = "https://example.com/exec") {
+  const iframeWindow = {};
+  const state = { busy: false, errors: [], successes: [], resetCount: 0, posts: [] };
+  const controller = Registration.createSubmissionController({
+    endpoint,
+    timeoutMs: 30000,
+    iframeWindow,
+    post(payload) {
+      state.posts.push(payload);
+    },
+    setBusy(value) {
+      state.busy = value;
+    },
+    showError(message) {
+      state.errors.push(message);
+    },
+    showSuccess(result) {
+      state.successes.push(result);
+    },
+    reset() {
+      state.resetCount += 1;
+    },
+    setTimer() {
+      return 7;
+    },
+    clearTimer() {}
+  });
+  return { controller, iframeWindow, state };
+}
+
+test("an unconfigured endpoint cannot display a fake success", async () => {
+  const { controller, state } = createControllerHarness("");
+  const submitted = await controller.submit(async () => ({ nonce: "nonce-1" }));
+
+  assert.equal(submitted, false);
+  assert.equal(state.posts.length, 0);
+  assert.deepEqual(state.successes, []);
+  assert.deepEqual(state.errors, ["报名系统设置中，请 WhatsApp 联系 Irene。"]);
+});
+
+test("two rapid submits create only one transport post", async () => {
+  const { controller, state } = createControllerHarness();
+  let release;
+  const payloadPromise = new Promise((resolve) => {
+    release = () => resolve({ nonce: "nonce-1" });
+  });
+
+  const first = controller.submit(() => payloadPromise);
+  const second = await controller.submit(async () => ({ nonce: "nonce-2" }));
+  release();
+  const firstResult = await first;
+
+  assert.equal(second, false);
+  assert.equal(firstResult, true);
+  assert.equal(state.posts.length, 1);
+  assert.equal(state.posts[0].nonce, "nonce-1");
+});
+
+test("a backend failure preserves the form and a matching success resets it", async () => {
+  const failure = createControllerHarness();
+  await failure.controller.submit(async () => ({ nonce: "nonce-fail" }));
+  assert.equal(failure.controller.handleMessage({
+    source: failure.iframeWindow,
+    data: { source: "irene-workshop-registration", nonce: "nonce-fail", ok: false, message: "储存失败，请重试。" }
+  }), true);
+  assert.deepEqual(failure.state.errors, ["储存失败，请重试。"]);
+  assert.equal(failure.state.resetCount, 0);
+
+  const success = createControllerHarness();
+  await success.controller.submit(async () => ({ nonce: "nonce-ok" }));
+  assert.equal(success.controller.handleMessage({
+    source: success.iframeWindow,
+    data: { source: "irene-workshop-registration", nonce: "nonce-ok", ok: true, submissionId: "REG-1", message: "报名资料已经保存。" }
+  }), true);
+  assert.equal(success.state.successes[0].submissionId, "REG-1");
+  assert.equal(success.state.resetCount, 1);
+});

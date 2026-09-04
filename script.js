@@ -576,52 +576,17 @@ function renderWorkshopDetail() {
 function setupRegistrationForm() {
   const form = document.querySelector("[data-registration-form]");
 
-  if (!form || typeof siteData === "undefined") {
+  if (!form || typeof siteData === "undefined" || typeof Registration === "undefined") {
     return;
   }
 
-  const proofInput = form.querySelector("[data-proof-input]");
-  const fileLabel = form.querySelector("[data-file-label]");
-  const fileStatus = form.querySelector("[data-file-status]");
-  const proofName = form.querySelector("[data-proof-name]");
-  const removeProof = form.querySelector("[data-remove-proof]");
-  const message = form.querySelector("[data-form-message]");
-
-  function updateFileStatus() {
-    const file = proofInput.files[0];
-    fileStatus.hidden = !file;
-    proofName.textContent = file ? file.name : "";
-    fileLabel.textContent = file ? "重新选择" : "选择付款证明";
-  }
-
-  proofInput.addEventListener("change", updateFileStatus);
-  removeProof.addEventListener("click", () => {
-    proofInput.value = "";
-    updateFileStatus();
-    proofInput.focus();
-  });
-
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    message.replaceChildren();
-    message.className = "form-message";
-
-    if (!proofInput.files[0]) {
-      message.classList.add("form-message--error");
-      message.textContent = siteData.registration.missingProofMessage;
-      return;
-    }
-
-    if (!form.reportValidity()) {
-      return;
-    }
-
-    const title = document.createElement("strong");
-    const text = document.createElement("p");
-    message.classList.add("form-message--success");
-    title.textContent = siteData.registration.successTitle;
-    text.textContent = siteData.registration.successMessage;
-    message.append(title, text);
+  const params = new URLSearchParams(window.location.search);
+  const workshop = getWorkshopBySlug(siteData, params.get("workshop"));
+  Registration.setup({
+    form,
+    workshop,
+    priceState: getWorkshopPriceState(workshop),
+    config: siteData.registration
   });
 }
 

@@ -17,7 +17,7 @@ function validateSubmission_(params) {
 
   var required = [
     "submissionId", "nonce", "workshopId", "workshopTitle", "workshopDate",
-    "name", "whatsapp", "displayedPrice", "priceType", "proofName",
+    "name", "email", "whatsapp", "displayedPrice", "priceType", "proofName",
     "proofType", "proofSize", "proofBase64"
   ];
   for (var i = 0; i < required.length; i += 1) {
@@ -44,6 +44,7 @@ function validateSubmission_(params) {
       workshopTitle: safeText_(params.workshopTitle, 200),
       workshopDate: safeText_(params.workshopDate, 100),
       name: safeText_(params.name, 120),
+      email: safeText_(params.email, 200),
       whatsapp: safeText_(params.whatsapp, 80),
       teaching: safeText_(params.teaching, 200),
       displayedPrice: safeText_(params.displayedPrice, 40),
@@ -125,6 +126,7 @@ function processRegistration_(params, services) {
         data.workshopTitle,
         data.workshopDate,
         data.name,
+        data.email,
         data.whatsapp,
         data.teaching,
         data.displayedPrice,

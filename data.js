@@ -245,6 +245,7 @@ const siteData = {
     submissionTimeoutMs: 30000,
     nameReminder: "请填写与当天进入 Google Meet 时相同的姓名。",
     nameNote: "课程当天将根据报名名单核对入场姓名，姓名不符或未在名单内者可能无法进入。",
+    emailReminder: "请填写与当天进入 Google Meet 时相同的 Email 账号。",
     paymentNote: "请付款前确认收款人资料。完成付款后，请上传付款证明。",
     missingProofMessage: "请先上传付款证明后再提交报名。",
     successTitle: "报名已提交 ✓",

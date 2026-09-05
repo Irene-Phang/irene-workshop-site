@@ -529,6 +529,7 @@ function renderWorkshopDetail() {
   document.querySelector("[data-detail-cta-support]").textContent = detailContent.ctaSupport || "";
   document.querySelector("[data-name-reminder]").textContent = siteData.registration.nameReminder;
   document.querySelector("[data-name-note]").textContent = siteData.registration.nameNote;
+  document.querySelector("[data-email-reminder]").textContent = siteData.registration.emailReminder;
   document.querySelector("[data-payment-pricing]").replaceChildren(createWorkshopPriceBlock(workshop, "payment-price"));
   document.querySelector("[data-payment-recipient]").textContent = siteData.payment.recipientName;
   document.querySelector("[data-payment-note]").textContent = siteData.registration.paymentNote;

@@ -16,6 +16,7 @@ function validParams(overrides = {}) {
     workshopTitle: "AI 出卷实战 WORKSHOP",
     workshopDate: "15 September 2026",
     name: "系统测试",
+    email: "teacher@example.com",
     whatsapp: "0000000000",
     teaching: "TEST - 可删除",
     displayedPrice: "RM99",
@@ -94,7 +95,17 @@ test("rejects unsupported and oversized proofs", () => {
   assert.equal(oversized.state.files.length, 0);
 });
 
-test("stores one file and one 14-column row for a valid submission", () => {
+test("rejects a submission without the Google Meet email", () => {
+  const services = fakeServices();
+  const result = context.processRegistration_(validParams({ email: "" }), services);
+
+  assert.equal(result.ok, false);
+  assert.equal(result.code, "INVALID_SUBMISSION");
+  assert.equal(services.state.rows.length, 0);
+  assert.equal(services.state.files.length, 0);
+});
+
+test("stores the email in one 15-column row for a valid submission", () => {
   const services = fakeServices();
   const result = context.processRegistration_(validParams(), services);
 
@@ -105,11 +116,12 @@ test("stores one file and one 14-column row for a valid submission", () => {
   assert.equal(services.state.files[0].bytes.length, 3);
   assert.match(services.state.files[0].name, /^REG-20260904-ABC123_ai-exam-language-2026-09_20260904T120000Z\.png$/);
   assert.equal(services.state.rows.length, 1);
-  assert.equal(services.state.rows[0].length, 14);
+  assert.equal(services.state.rows[0].length, 15);
   assert.equal(services.state.rows[0][1], "REG-20260904-ABC123");
-  assert.equal(services.state.rows[0][8], "RM99");
-  assert.equal(services.state.rows[0][9], "早鸟");
-  assert.equal(services.state.rows[0][12], "待核对");
+  assert.equal(services.state.rows[0][6], "teacher@example.com");
+  assert.equal(services.state.rows[0][9], "RM99");
+  assert.equal(services.state.rows[0][10], "早鸟");
+  assert.equal(services.state.rows[0][13], "待核对");
   assert.equal(services.state.released, true);
 });
 

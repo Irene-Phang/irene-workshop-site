@@ -196,8 +196,8 @@ function buildResponseHtml_(result) {
     .replace(/</g, "\\u003c")
     .replace(/>/g, "\\u003e")
     .replace(/&/g, "\\u0026");
-  return "<!doctype html><meta charset=\"utf-8\"><script>window.parent.postMessage(" +
-    serialized + ", \"*\");<\/script>";
+  return '<!doctype html><meta charset="utf-8"><script>window.parent.postMessage(' +
+    serialized + ', "*");</scr' + 'ipt>';
 }
 
 function doPost(e) {

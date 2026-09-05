@@ -146,3 +146,12 @@ test("response HTML posts only serialized result data", () => {
   assert.doesNotMatch(html, /<script>alert\(1\)<\/script>/);
   assert.match(html, /window\.parent\.postMessage/);
 });
+
+test("response wrapper can be pasted through a JavaScript string without escaped quotes", () => {
+  const responseFunction = source.slice(
+    source.indexOf("function buildResponseHtml_"),
+    source.indexOf("function doPost")
+  );
+
+  assert.doesNotMatch(responseFunction, /\\\"/);
+});

@@ -500,6 +500,7 @@ function renderWorkshopDetail() {
 
   document.querySelector("[data-detail-label]").textContent = workshop.label || "";
   document.querySelector("[data-detail-claim]").textContent = detailContent.claim;
+  document.querySelector("[data-detail-supporting-claim]").textContent = detailContent.supportingClaim || "";
   document.querySelector("[data-detail-title]").textContent = workshop.title;
   document.querySelector("[data-detail-subtitle]").textContent = workshop.subtitle || workshop.summary;
   document.querySelector("[data-detail-date]").textContent = workshop.dateLabel;

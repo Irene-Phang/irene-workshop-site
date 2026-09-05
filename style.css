@@ -938,6 +938,23 @@ textarea {
   width: 100%;
 }
 
+.submit-button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.registration-response-frame {
+  display: none;
+}
+
 .form-message {
   border-radius: var(--radius-medium);
 }

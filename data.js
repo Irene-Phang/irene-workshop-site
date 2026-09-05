@@ -238,7 +238,7 @@ const siteData = {
     duitNowQrImage: "images/duitnow-qr.jpg"
   },
   registration: {
-    endpoint: "",
+    endpoint: "https://script.google.com/macros/s/AKfycbyufEz3wg-v58Ey_lu6xiYldnmcsKQcR7bmmPUszHH5F49fsgRMmmKUtIplR6GHR1erfg/exec",
     maxProofSizeMb: 5,
     acceptedProofTypes: ["image/jpeg", "image/png", "image/webp", "application/pdf"],
     submissionTimeoutMs: 30000,

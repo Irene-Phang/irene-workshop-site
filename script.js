@@ -208,6 +208,7 @@ function createWorkshopCard(workshop) {
   if (workshop.image) {
     const image = document.createElement("img");
     image.className = "workshop-card__image";
+    image.loading = "lazy";
     image.src = workshop.image;
     image.alt = workshop.imageAlt;
     media.append(image);
@@ -317,6 +318,7 @@ function createPastWorkshopPoster(workshop) {
 
   poster.className = "past-workshop-poster";
   image.className = "past-workshop-poster__image";
+  image.loading = "lazy";
   image.src = workshop.image;
   image.alt = workshop.imageAlt || workshop.title;
   poster.append(image);
@@ -381,6 +383,7 @@ function renderSchoolWorkshops() {
   if (workshop.image) {
     const image = document.createElement("img");
     image.className = "school-card__image";
+    image.loading = "lazy";
     image.src = workshop.image;
     image.alt = workshop.imageAlt;
     media.append(image);
@@ -493,6 +496,7 @@ function renderWorkshopDetail() {
   document.title = `${workshop.title}｜Irene 老师`;
   if (workshop.image) {
     const image = document.createElement("img");
+    image.loading = "eager";
     image.src = workshop.image;
     image.alt = workshop.imageAlt;
     poster.replaceChildren(image);
@@ -566,6 +570,7 @@ function renderWorkshopDetail() {
   const qr = document.querySelector("[data-payment-qr]");
   if (siteData.payment.duitNowQrImage) {
     const image = document.createElement("img");
+    image.loading = "lazy";
     image.src = siteData.payment.duitNowQrImage;
     image.alt = "DuitNow QR";
     qr.replaceChildren(image);

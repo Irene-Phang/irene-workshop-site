@@ -93,15 +93,15 @@ const siteData = {
       subtitle: "从教材到完整考卷，一步一步带你做",
       image: "images/ai-exam-language-workshop.jpg",
       imageAlt: "语文科 AI 出卷实战 Workshop 宣传图",
-      date: "2026-09-15",
-      dateLabel: "15 September 2026",
-      time: "8:00 PM – 10:00 PM",
+      date: "2026-09-26",
+      dateLabel: "26 September 2026",
+      time: "7:30 PM – 9:30 PM",
       duration: "2小时",
       deliveryMode: "Online Workshop",
       summary: "从教材到完整考卷，一步一步带你做。",
       earlyBirdPrice: 99,
       regularPrice: 119,
-      earlyBirdDeadline: "2026-09-13",
+      earlyBirdDeadline: "2026-09-20",
       status: "open",
       detailUrl: "workshop-template.html?workshop=ai-exam-language",
       registrationUrl: "",
@@ -249,6 +249,9 @@ const siteData = {
     paymentNote: "请付款前确认收款人资料。完成付款后，请上传付款证明。",
     missingProofMessage: "请先上传付款证明后再提交报名。",
     successTitle: "报名已提交 ✓",
-    successMessage: "已收到你的报名资料与付款证明，我们会根据报名名单进行核对。请留意 WhatsApp 通知。Workshop 前一天会收到提醒，当天会再次收到 Google Meet 链接。"
+    successMessage: "已收到你的报名资料与付款证明，我们会根据报名名单进行核对。请留意 WhatsApp 通知。Workshop 前一天会收到提醒，当天会再次收到 Google Meet 链接。",
+    duplicateTitle: "你已经提交过这场 Workshop 的报名",
+    duplicateMessage: "如果资料需要修改，请 WhatsApp 联系 Irene。",
+    duplicateButtonLabel: "报名已提交"
   }
 };

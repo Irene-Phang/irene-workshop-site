@@ -35,7 +35,7 @@ function fakeServices(options = {}) {
     files: [],
     rows: [],
     released: false,
-    existingSubmissionId: options.existingSubmissionId || ""
+    lockEvents: []
   };
 
   return {
@@ -45,13 +45,19 @@ function fakeServices(options = {}) {
       return Array.from(Buffer.from(value, "base64"));
     },
     lock: {
-      waitLock() {},
+      waitLock() {
+        state.lockEvents.push("wait");
+      },
       releaseLock() {
+        state.lockEvents.push("release");
         state.released = true;
       }
     },
-    findBySubmissionId(id) {
-      return state.existingSubmissionId === id ? { submissionId: id } : null;
+    findByWorkshopAndWhatsapp(workshopId, normalizedWhatsapp) {
+      const row = state.rows.find((item) =>
+        item[2] === workshopId && context.normalizeWhatsApp_(item[7]) === normalizedWhatsapp
+      );
+      return row ? { submissionId: row[1] } : null;
     },
     createFile(fileData) {
       const file = {
@@ -125,15 +131,28 @@ test("stores the email in one 15-column row for a valid submission", () => {
   assert.equal(services.state.released, true);
 });
 
-test("returns the existing success without duplicating a submission", () => {
-  const services = fakeServices({ existingSubmissionId: "REG-20260904-ABC123" });
-  const result = context.processRegistration_(validParams(), services);
+test("normalizes Malaysian WhatsApp variants to one value", () => {
+  assert.equal(context.normalizeWhatsApp_("012-345 6789"), "60123456789");
+  assert.equal(context.normalizeWhatsApp_("+60 12 345 6789"), "60123456789");
+  assert.equal(context.normalizeWhatsApp_("0060 12-345 6789"), "60123456789");
+});
 
-  assert.equal(result.ok, true);
-  assert.equal(result.duplicate, true);
-  assert.equal(services.state.files.length, 0);
-  assert.equal(services.state.rows.length, 0);
-  assert.equal(services.state.released, true);
+test("three retries for one workshop and WhatsApp store only one row and proof", () => {
+  const services = fakeServices();
+  const attempts = [
+    validParams({ submissionId: "REG-1", whatsapp: "012-345 6789" }),
+    validParams({ submissionId: "REG-2", whatsapp: "+60 12 345 6789" }),
+    validParams({ submissionId: "REG-3", whatsapp: "60123456789" })
+  ].map((params) => context.processRegistration_(params, services));
+
+  assert.equal(attempts[0].status, "success");
+  assert.equal(attempts[1].status, "duplicate");
+  assert.equal(attempts[2].status, "duplicate");
+  assert.equal(attempts[1].submissionId, "REG-1");
+  assert.equal(services.state.files.length, 1);
+  assert.equal(services.state.rows.length, 1);
+  assert.equal(services.state.rows[0][7], "60123456789");
+  assert.deepEqual(services.state.lockEvents, ["wait", "release", "wait", "release", "wait", "release"]);
 });
 
 test("trashes the just-created file when the sheet append fails", () => {
@@ -149,14 +168,16 @@ test("trashes the just-created file when the sheet append fails", () => {
 test("response HTML posts only serialized result data", () => {
   const html = context.buildResponseHtml_({
     ok: true,
+    status: "success",
     nonce: "NONCE-</script><script>alert(1)</script>",
     submissionId: "REG-1",
     message: "报名资料已经保存。"
   });
 
   assert.match(html, /irene-workshop-registration/);
+  assert.match(html, /"status":"success"/);
   assert.doesNotMatch(html, /<script>alert\(1\)<\/script>/);
-  assert.match(html, /window\.parent\.postMessage/);
+  assert.match(html, /window\.top\.postMessage/);
 });
 
 test("response wrapper can be pasted through a JavaScript string without escaped quotes", () => {

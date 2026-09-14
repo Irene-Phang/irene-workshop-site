@@ -40,29 +40,32 @@ const Registration = (() => {
     };
   }
 
-  function isTrustedResponse(event, iframeWindow, nonce) {
-    return event.source === iframeWindow &&
-      event.data?.source === "irene-workshop-registration" &&
-      event.data?.nonce === nonce;
+  function isTrustedResponse(event, nonce) {
+    return event.data?.source === "irene-workshop-registration" &&
+      event.data?.nonce === nonce &&
+      ["success", "duplicate", "error"].includes(event.data?.status);
   }
 
   function createSubmissionController(options) {
     let submitting = false;
+    let completed = false;
     let activeNonce = "";
     let timeoutId = null;
 
-    function finish() {
+    function finish(unlock) {
       submitting = false;
       activeNonce = "";
       if (timeoutId !== null) {
         options.clearTimer(timeoutId);
         timeoutId = null;
       }
-      options.setBusy(false);
+      if (unlock) {
+        options.setBusy(false);
+      }
     }
 
     async function submit(createPayload) {
-      if (submitting) {
+      if (submitting || completed) {
         return false;
       }
 
@@ -79,30 +82,37 @@ const Registration = (() => {
         activeNonce = payload.nonce;
         options.post(payload);
         timeoutId = options.setTimer(() => {
-          finish();
-          options.showError("暂时无法确认报名是否成功，请重试或 WhatsApp 联系 Irene。");
+          finish(true);
+          options.showError("暂时无法完成报名，请重试或 WhatsApp 联系 Irene");
         }, options.timeoutMs);
         return true;
       } catch (error) {
-        finish();
+        finish(true);
         options.showError(error.message || "报名资料无法提交，请重试。");
         return false;
       }
     }
 
     function handleMessage(event) {
-      if (!submitting || !isTrustedResponse(event, options.iframeWindow, activeNonce)) {
+      if (!submitting || !isTrustedResponse(event, activeNonce)) {
         return false;
       }
 
       const result = event.data;
-      finish();
-
-      if (result.ok) {
+      if (result.status === "success") {
+        completed = true;
+        finish(false);
         options.showSuccess(result);
         options.reset();
+        options.lockForm("success");
+      } else if (result.status === "duplicate") {
+        completed = true;
+        finish(false);
+        options.showDuplicate(result);
+        options.lockForm("duplicate");
       } else {
-        options.showError(result.message || "报名资料无法保存，请重试。");
+        finish(true);
+        options.showError("暂时无法完成报名，请重试或 WhatsApp 联系 Irene");
       }
 
       return true;
@@ -189,20 +199,40 @@ const Registration = (() => {
       message.append(title, text, reference);
     }
 
+    function showDuplicate() {
+      const title = document.createElement("strong");
+      const text = document.createElement("p");
+      clearMessage();
+      message.classList.add("form-message--success");
+      title.textContent = config.duplicateTitle;
+      text.textContent = config.duplicateMessage;
+      message.append(title, text);
+    }
+
+    function lockForm(status) {
+      form.querySelectorAll("input, button").forEach((control) => {
+        control.disabled = true;
+      });
+      submitButton.textContent = status === "success" ? config.successTitle : config.duplicateButtonLabel;
+      form.setAttribute("aria-busy", "false");
+      form.dataset.submissionStatus = status;
+    }
+
     const controller = createSubmissionController({
       endpoint: config.endpoint,
       timeoutMs: config.submissionTimeoutMs,
-      iframeWindow: responseFrame.contentWindow,
       post(payload) {
         postViaIframe(config.endpoint, responseFrame.name, payload);
       },
       setBusy(value) {
         submitButton.disabled = value;
-        submitButton.textContent = value ? "正在提交…" : "提交报名";
+        submitButton.textContent = value ? "提交中…" : "提交报名";
         form.setAttribute("aria-busy", String(value));
       },
       showError,
       showSuccess,
+      showDuplicate,
+      lockForm,
       reset() {
         form.reset();
         updateFileStatus();

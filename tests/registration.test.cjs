@@ -69,21 +69,20 @@ test("builds the registration snapshot sent to Google", () => {
   });
 });
 
-test("trusts only the expected iframe and nonce", () => {
-  const iframeWindow = {};
+test("trusts the expected response marker and nonce across Google redirects", () => {
   const validEvent = {
-    source: iframeWindow,
-    data: { source: "irene-workshop-registration", nonce: "nonce-1" }
+    source: {},
+    data: { source: "irene-workshop-registration", nonce: "nonce-1", status: "success" }
   };
 
-  assert.equal(Registration.isTrustedResponse(validEvent, iframeWindow, "nonce-1"), true);
-  assert.equal(Registration.isTrustedResponse({ ...validEvent, source: {} }, iframeWindow, "nonce-1"), false);
-  assert.equal(Registration.isTrustedResponse({ ...validEvent, data: { ...validEvent.data, nonce: "wrong" } }, iframeWindow, "nonce-1"), false);
+  assert.equal(Registration.isTrustedResponse(validEvent, "nonce-1"), true);
+  assert.equal(Registration.isTrustedResponse({ ...validEvent, data: { ...validEvent.data, source: "other" } }, "nonce-1"), false);
+  assert.equal(Registration.isTrustedResponse({ ...validEvent, data: { ...validEvent.data, nonce: "wrong" } }, "nonce-1"), false);
 });
 
 function createControllerHarness(endpoint = "https://example.com/exec") {
   const iframeWindow = {};
-  const state = { busy: false, errors: [], successes: [], resetCount: 0, posts: [] };
+  const state = { busy: false, errors: [], successes: [], duplicates: [], locked: [], resetCount: 0, posts: [] };
   const controller = Registration.createSubmissionController({
     endpoint,
     timeoutMs: 30000,
@@ -99,6 +98,12 @@ function createControllerHarness(endpoint = "https://example.com/exec") {
     },
     showSuccess(result) {
       state.successes.push(result);
+    },
+    showDuplicate(result) {
+      state.duplicates.push(result);
+    },
+    lockForm(status) {
+      state.locked.push(status);
     },
     reset() {
       state.resetCount += 1;
@@ -139,22 +144,44 @@ test("two rapid submits create only one transport post", async () => {
   assert.equal(state.posts[0].nonce, "nonce-1");
 });
 
-test("a backend failure preserves the form and a matching success resets it", async () => {
+test("backend success locks the form while a real failure reopens it", async () => {
   const failure = createControllerHarness();
   await failure.controller.submit(async () => ({ nonce: "nonce-fail" }));
   assert.equal(failure.controller.handleMessage({
     source: failure.iframeWindow,
-    data: { source: "irene-workshop-registration", nonce: "nonce-fail", ok: false, message: "储存失败，请重试。" }
+    data: { source: "irene-workshop-registration", nonce: "nonce-fail", status: "error" }
   }), true);
-  assert.deepEqual(failure.state.errors, ["储存失败，请重试。"]);
+  assert.deepEqual(failure.state.errors, ["暂时无法完成报名，请重试或 WhatsApp 联系 Irene"]);
   assert.equal(failure.state.resetCount, 0);
+  assert.equal(failure.state.busy, false);
 
   const success = createControllerHarness();
   await success.controller.submit(async () => ({ nonce: "nonce-ok" }));
   assert.equal(success.controller.handleMessage({
     source: success.iframeWindow,
-    data: { source: "irene-workshop-registration", nonce: "nonce-ok", ok: true, submissionId: "REG-1", message: "报名资料已经保存。" }
+    data: { source: "irene-workshop-registration", nonce: "nonce-ok", status: "success", submissionId: "REG-1" }
   }), true);
   assert.equal(success.state.successes[0].submissionId, "REG-1");
   assert.equal(success.state.resetCount, 1);
+  assert.equal(success.state.busy, true);
+  assert.deepEqual(success.state.locked, ["success"]);
+});
+
+test("duplicate response is distinct and keeps the form locked", async () => {
+  const duplicate = createControllerHarness();
+  await duplicate.controller.submit(async () => ({ nonce: "nonce-duplicate" }));
+
+  assert.equal(duplicate.controller.handleMessage({
+    source: {},
+    data: {
+      source: "irene-workshop-registration",
+      nonce: "nonce-duplicate",
+      status: "duplicate",
+      submissionId: "REG-FIRST"
+    }
+  }), true);
+  assert.equal(duplicate.state.duplicates[0].submissionId, "REG-FIRST");
+  assert.equal(duplicate.state.resetCount, 0);
+  assert.equal(duplicate.state.busy, true);
+  assert.deepEqual(duplicate.state.locked, ["duplicate"]);
 });

@@ -7,7 +7,18 @@ function safeText_(value, maxLength) {
 }
 
 function invalidResult_(code, message) {
-  return { ok: false, code: code, message: message };
+  return { ok: false, status: "error", code: code, message: message };
+}
+
+function normalizeWhatsApp_(value) {
+  var digits = safeText_(value, 80).replace(/\D/g, "");
+  if (digits.indexOf("00") === 0) {
+    digits = digits.slice(2);
+  }
+  if (digits.indexOf("0") === 0) {
+    return "60" + digits.slice(1);
+  }
+  return digits;
 }
 
 function validateSubmission_(params) {
@@ -45,7 +56,7 @@ function validateSubmission_(params) {
       workshopDate: safeText_(params.workshopDate, 100),
       name: safeText_(params.name, 120),
       email: safeText_(params.email, 200),
-      whatsapp: safeText_(params.whatsapp, 80),
+      whatsapp: normalizeWhatsApp_(params.whatsapp),
       teaching: safeText_(params.teaching, 200),
       displayedPrice: safeText_(params.displayedPrice, 40),
       priceType: safeText_(params.priceType, 40),
@@ -94,12 +105,13 @@ function processRegistration_(params, services) {
   services.lock.waitLock(30000);
 
   try {
-    if (services.findBySubmissionId(data.submissionId)) {
+    var existing = services.findByWorkshopAndWhatsapp(data.workshopId, data.whatsapp);
+    if (existing) {
       return {
         ok: true,
-        duplicate: true,
-        submissionId: data.submissionId,
-        message: "这笔报名资料已经保存。"
+        status: "duplicate",
+        submissionId: existing.submissionId || "",
+        message: "你已经提交过这场 Workshop 的报名。"
       };
     }
 
@@ -143,6 +155,7 @@ function processRegistration_(params, services) {
 
     return {
       ok: true,
+      status: "success",
       submissionId: data.submissionId,
       message: "报名资料已经保存。"
     };
@@ -169,13 +182,16 @@ function createGoogleServices_() {
     now: function () { return new Date(); },
     decodeBase64: function (value) { return Utilities.base64Decode(value); },
     lock: LockService.getScriptLock(),
-    findBySubmissionId: function (submissionId) {
+    findByWorkshopAndWhatsapp: function (workshopId, normalizedWhatsapp) {
       if (sheet.getLastRow() < 2) return null;
-      var match = sheet.getRange(2, 2, sheet.getLastRow() - 1, 1)
-        .createTextFinder(submissionId)
-        .matchEntireCell(true)
-        .findNext();
-      return match ? { submissionId: submissionId } : null;
+      var rows = sheet.getRange(2, 2, sheet.getLastRow() - 1, 7).getValues();
+      for (var i = 0; i < rows.length; i += 1) {
+        if (safeText_(rows[i][1], 120) === workshopId &&
+            normalizeWhatsApp_(rows[i][6]) === normalizedWhatsapp) {
+          return { submissionId: safeText_(rows[i][0], 120) };
+        }
+      }
+      return null;
     },
     createFile: function (fileData) {
       var driveFile = folder.createFile(Utilities.newBlob(fileData.bytes, fileData.mimeType, fileData.name));
@@ -191,6 +207,7 @@ function buildResponseHtml_(result) {
     source: "irene-workshop-registration",
     nonce: result.nonce || "",
     ok: Boolean(result.ok),
+    status: result.status || "error",
     submissionId: result.submissionId || "",
     message: result.message || "报名资料无法保存，请重试。"
   };
@@ -198,8 +215,8 @@ function buildResponseHtml_(result) {
     .replace(/</g, "\\u003c")
     .replace(/>/g, "\\u003e")
     .replace(/&/g, "\\u0026");
-  return '<!doctype html><meta charset="utf-8"><script>window.parent.postMessage(' +
-    serialized + ', "*");</scr' + 'ipt>';
+  return '<!doctype html><meta charset="utf-8"><script>(function(){var result=' +
+    serialized + ';window.top.postMessage(result,"*");if(window.parent!==window.top){window.parent.postMessage(result,"*");}}());</scr' + 'ipt>';
 }
 
 function doPost(e) {

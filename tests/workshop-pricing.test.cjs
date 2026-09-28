@@ -80,7 +80,7 @@ test("school workshop uses the approved Canva cover and event details", () => {
   assert.equal(workshop.title, "Canva 教师工作坊");
   assert.equal(workshop.topic, "教师工作，也可以换一种方法");
   assert.equal(workshop.month, "26.9.2026");
-  assert.equal(workshop.image, "images/canva-teacher-workshop-2026-09-26.png");
+  assert.equal(workshop.image, "images/canva-teacher-workshop-2026-09-26-v2.png");
   assert.equal(workshop.imageAlt, "Canva 教师工作坊：教师工作，也可以换一种方法");
   assert.equal(workshop.status, "completed");
   assert.equal(

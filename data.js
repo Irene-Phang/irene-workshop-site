@@ -227,7 +227,7 @@ const siteData = {
       title: "Canva 教师工作坊",
       topic: "教师工作，也可以换一种方法",
       month: "26.9.2026",
-      image: "images/canva-teacher-workshop-2026-09-26.png",
+      image: "images/canva-teacher-workshop-2026-09-26-v2.png",
       imageAlt: "Canva 教师工作坊：教师工作，也可以换一种方法",
       status: "completed"
     }

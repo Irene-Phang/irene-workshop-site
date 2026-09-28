@@ -154,6 +154,20 @@ const WORKSHOP_STATUS_LABELS = {
   completed: "已完成"
 };
 
+function getWorkshopStatusPresentation(workshop) {
+  if (workshop.status === "ended") {
+    return {
+      label: WORKSHOP_STATUS_LABELS.ended,
+      message: "这场 Workshop 已结束，报名已关闭。"
+    };
+  }
+
+  return {
+    label: WORKSHOP_STATUS_LABELS[workshop.status] || WORKSHOP_STATUS_LABELS.coming_soon,
+    message: "报名尚未开放，确认课程资料后会在这里开放报名。"
+  };
+}
+
 function createWorkshopPriceBlock(workshop, className = "workshop-price") {
   const price = getWorkshopPriceState(workshop);
   const container = document.createElement("div");
@@ -538,12 +552,17 @@ function renderWorkshopDetail() {
   registrationSection.hidden = !registrationIsOpen;
 
   if (!registrationIsOpen) {
+    const statusPresentation = getWorkshopStatusPresentation(workshop);
     const status = document.createElement("span");
     status.className = "button button--disabled workshop-intro__action";
     status.setAttribute("aria-disabled", "true");
-    status.textContent = WORKSHOP_STATUS_LABELS[workshop.status] || WORKSHOP_STATUS_LABELS.coming_soon;
+    status.textContent = statusPresentation.label;
     detailAction.replaceWith(status);
   }
+
+  const closedPresentation = getWorkshopStatusPresentation(workshop);
+  document.querySelector("[data-registration-closed-title]").textContent = closedPresentation.label;
+  document.querySelector("[data-registration-closed-message]").textContent = closedPresentation.message;
 
   fillList("[data-detail-pain-points]", detailContent.painPoints);
   fillList("[data-detail-outcomes]", detailContent.outcomes);

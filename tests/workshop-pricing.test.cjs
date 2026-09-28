@@ -90,6 +90,14 @@ test("school workshop uses the approved Canva cover and event details", () => {
   );
 });
 
+test("ended workshop presents a closed registration state", () => {
+  const { getWorkshopStatusPresentation } = loadWorkshopFunctions();
+  const result = getWorkshopStatusPresentation({ status: "ended" });
+
+  assert.equal(result.label, "课程已结束");
+  assert.equal(result.message, "这场 Workshop 已结束，报名已关闭。");
+});
+
 test("Malaysia date changes at Kuala Lumpur midnight", () => {
   const { getMalaysiaDateKey } = loadWorkshopFunctions();
 

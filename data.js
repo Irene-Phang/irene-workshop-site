@@ -102,7 +102,7 @@ const siteData = {
       earlyBirdPrice: 99,
       regularPrice: 119,
       earlyBirdDeadline: "2026-09-20",
-      status: "open",
+      status: "ended",
       detailUrl: "workshop-template.html?workshop=ai-exam-language",
       registrationUrl: "",
       audience: "Bahasa Melayu / English / 华文教师",

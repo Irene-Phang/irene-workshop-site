@@ -224,12 +224,12 @@ const siteData = {
   // status 只填写：preparing 或 completed
   schoolWorkshops: [
     {
-      title: "校内教师培训｜资料待更新",
-      topic: "主题待更新",
-      month: "月份待更新",
-      image: "",
-      imageAlt: "School Workshop 活动照片待更新",
-      status: "preparing"
+      title: "Canva 教师工作坊",
+      topic: "教师工作，也可以换一种方法",
+      month: "26.9.2026",
+      image: "images/canva-teacher-workshop-2026-09-26.png",
+      imageAlt: "Canva 教师工作坊：教师工作，也可以换一种方法",
+      status: "completed"
     }
   ],
 

@@ -73,6 +73,23 @@ test("AI exam workshop uses the rescheduled date and changes price after 20 Sept
   assert.equal(getWorkshopPriceState(current, "2026-09-21").currentPrice, 119);
 });
 
+test("school workshop uses the approved Canva cover and event details", () => {
+  const data = loadSiteData();
+  const workshop = data.schoolWorkshops[0];
+
+  assert.equal(workshop.title, "Canva 教师工作坊");
+  assert.equal(workshop.topic, "教师工作，也可以换一种方法");
+  assert.equal(workshop.month, "26.9.2026");
+  assert.equal(workshop.image, "images/canva-teacher-workshop-2026-09-26.png");
+  assert.equal(workshop.imageAlt, "Canva 教师工作坊：教师工作，也可以换一种方法");
+  assert.equal(workshop.status, "completed");
+  assert.equal(
+    fs.existsSync(path.join(__dirname, "..", workshop.image)),
+    true,
+    "configured School Workshop cover should exist"
+  );
+});
+
 test("Malaysia date changes at Kuala Lumpur midnight", () => {
   const { getMalaysiaDateKey } = loadWorkshopFunctions();
 

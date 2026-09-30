@@ -419,6 +419,151 @@ function renderSchoolWorkshops() {
   section.hidden = false;
 }
 
+function renderCanvaCourses() {
+  const section = document.querySelector('[data-section="canva-courses"]');
+  const container = document.querySelector("[data-canva-courses]");
+  const data = siteData && siteData.canvaCourses;
+
+  if (!section || !container || !data || !Array.isArray(data.levels)) {
+    return;
+  }
+
+  const levels = data.levels.filter((level) => level.id === "canva-level-1");
+  if (levels.length === 0) {
+    return;
+  }
+
+  const cards = levels.map((level) => {
+    const card = document.createElement("article");
+    const media = document.createElement("div");
+    const body = document.createElement("div");
+    const levelLabel = document.createElement("p");
+    const title = document.createElement("h3");
+    const summary = document.createElement("p");
+    const status = document.createElement("p");
+    const link = document.createElement("a");
+
+    card.className = "canva-course-card";
+    media.className = "canva-course-card__media";
+    body.className = "canva-course-card__body";
+    levelLabel.className = "canva-course-card__level";
+    title.className = "canva-course-card__title";
+    summary.className = "canva-course-card__summary";
+    status.className = "canva-course-card__status";
+    link.className = "button button--primary canva-course-card__action";
+
+    if (level.image) {
+      const image = document.createElement("img");
+      image.className = "canva-course-card__image";
+      image.loading = "lazy";
+      image.src = level.image;
+      image.alt = level.imageAlt || level.title;
+      media.append(image);
+    }
+
+    levelLabel.textContent = level.levelLabel;
+    title.textContent = level.title;
+    summary.textContent = level.summary;
+    status.textContent = level.statusLabel;
+    link.href = level.detailUrl;
+    link.textContent = "查看课程";
+    body.append(levelLabel, title, summary, status, link);
+    card.append(media, body);
+    return card;
+  });
+
+  section.querySelector("[data-canva-courses-title]").textContent = data.sectionTitle;
+  section.querySelector("[data-canva-courses-subtitle]").textContent = data.sectionSubtitle;
+  container.replaceChildren(...cards);
+  section.hidden = false;
+}
+
+function renderCanvaCourseDetail() {
+  const page = document.querySelector("[data-canva-course-detail]");
+  const level = siteData && siteData.canvaCourses && siteData.canvaCourses.levels
+    ? siteData.canvaCourses.levels.find((item) => item.id === "canva-level-1")
+    : null;
+
+  if (!page || !level) {
+    return;
+  }
+
+  document.title = `${level.levelLabel}｜${level.title}｜Irene 老师`;
+  page.querySelector("[data-canva-level]").textContent = level.levelLabel;
+  page.querySelector("[data-canva-title]").textContent = level.title;
+  page.querySelector("[data-canva-status]").textContent = level.statusLabel;
+  page.querySelector("[data-canva-intro]").textContent = level.intro;
+
+  const poster = page.querySelector("[data-canva-poster]");
+  if (level.image) {
+    const image = document.createElement("img");
+    image.src = level.image;
+    image.alt = level.imageAlt || level.title;
+    poster.replaceChildren(image);
+  }
+
+  const info = page.querySelector("[data-canva-info]");
+  const infoLabels = {
+    deliveryMode: "上课方式",
+    duration: "课时",
+    equipment: "设备要求",
+    classSize: "班级人数",
+    schedule: "上课时间",
+    fee: "费用"
+  };
+  info.replaceChildren(...Object.entries(level.info).filter(([key, value]) => {
+    if (level.status !== "open" && ["classSize", "schedule", "fee"].includes(key)) return false;
+    return value;
+  }).map(([key, value]) => {
+    const item = document.createElement("div");
+    const label = document.createElement("dt");
+    const detail = document.createElement("dd");
+    label.textContent = infoLabels[key] || key;
+    detail.textContent = value;
+    item.append(label, detail);
+    return item;
+  }));
+
+  const modules = page.querySelector("[data-canva-modules]");
+  modules.replaceChildren(...level.modules.map((module) => {
+    const item = document.createElement("li");
+    const name = document.createElement("strong");
+    const topic = document.createElement("span");
+    name.textContent = module.name;
+    topic.textContent = module.topic;
+    item.append(name, topic);
+    return item;
+  }));
+
+  const works = page.querySelector("[data-canva-works]");
+  works.replaceChildren(...level.works.map((work) => {
+    const figure = document.createElement("figure");
+    const image = document.createElement("img");
+    image.src = work.image;
+    image.alt = work.alt || "学生作品";
+    figure.append(image);
+    return figure;
+  }));
+  page.querySelector("[data-canva-works-empty]").hidden = level.works.length > 0;
+
+  const faqs = page.querySelector("[data-canva-faqs]");
+  faqs.replaceChildren(...level.faqs.map((item) => {
+    const details = document.createElement("details");
+    const summary = document.createElement("summary");
+    const answer = document.createElement("p");
+    summary.textContent = item.question;
+    answer.textContent = item.answer;
+    details.append(summary, answer);
+    return details;
+  }));
+
+  page.querySelectorAll("[data-contact=whatsapp]").forEach((link) => {
+    link.href = siteData.contact.whatsapp;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+  });
+}
+
 function renderSiteFooter() {
   if (typeof siteData === "undefined") {
     return;
@@ -622,6 +767,8 @@ document.addEventListener("DOMContentLoaded", () => {
   renderTestimonials();
   renderPastWorkshops();
   renderSchoolWorkshops();
+  renderCanvaCourses();
+  renderCanvaCourseDetail();
   renderWorkshopDetail();
   renderSiteFooter();
   setupContactLinks();

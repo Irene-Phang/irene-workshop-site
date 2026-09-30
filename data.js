@@ -203,6 +203,46 @@ const siteData = {
     }
   ],
 
+  // ---------- Canva 课程 ----------
+  // 课程资料集中放在这里；首页目前只公开 Level 1。
+  canvaCourses: {
+    sectionTitle: "Canva 课程",
+    sectionSubtitle: "小学三年级起｜Level 制课程",
+    levels: [
+      {
+        id: "canva-level-1",
+        levelLabel: "LEVEL 1",
+        title: "Canva 基础创作",
+        summary: "从认识 Canva 到完成第一份自己的学习作品。",
+        status: "open",
+        statusLabel: "招生中",
+        image: "images/canva-teacher-workshop-2026-09-26-v2.png",
+        imageAlt: "Canva Level 1 课程宣传图",
+        detailUrl: "canva-level1.html",
+        intro: "Canva 课程采用 Level 制，不按年龄分班。目前公开对象先定位为小学三年级起至中学生，循序练习把想法变成作品。",
+        info: {
+          deliveryMode: "线上小班",
+          duration: "每次 1.5 小时",
+          equipment: "电脑或平板，稳定网络",
+          classSize: "小班制",
+          schedule: "报名后通知",
+          fee: "RM 价钱待公布"
+        },
+        modules: [
+          { name: "基础操作", topic: "认识版面、文字、图片与素材" },
+          { name: "视觉表达", topic: "用颜色、字体和布局说清楚想法" },
+          { name: "作品实作", topic: "完成一份可以分享的个人作品" }
+        ],
+        works: [],
+        faqs: [
+          { question: "需要自备电脑吗？", answer: "建议自备电脑或平板，方便跟着课堂一起操作。" },
+          { question: "零基础可以参加吗？", answer: "可以。Level 1 会从基础操作开始，适合第一次接触 Canva 的学生。" },
+          { question: "如果缺课怎么办？", answer: "请提前联系 Irene 老师，我们会根据课程安排说明补课或跟进方式。" }
+        ]
+      }
+    ]
+  },
+
   // ---------- 学员反馈 ----------
   // 只放学员愿意公开的反馈，并使用匿名称呼。
   testimonials: [

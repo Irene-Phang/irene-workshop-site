@@ -655,6 +655,230 @@ textarea {
   line-height: 1.45;
 }
 
+.section__eyebrow {
+  margin: 0 0 var(--space-1);
+  color: var(--color-accent);
+  font-size: var(--text-small);
+  font-weight: 700;
+}
+
+.canva-courses {
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+.canva-course-card {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 1.25rem;
+  background: var(--color-surface);
+}
+
+.canva-course-card__image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.canva-course-card__body {
+  padding: var(--space-4);
+}
+
+.canva-course-card__level,
+.canva-detail__level {
+  margin: 0;
+  color: var(--color-accent);
+  font-size: var(--text-small);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.canva-course-card__title {
+  margin: var(--space-1) 0 0;
+  color: var(--color-heading);
+  font-size: 1.35rem;
+}
+
+.canva-course-card__summary {
+  margin: var(--space-2) 0 0;
+}
+
+.canva-course-card__status {
+  margin: var(--space-3) 0;
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.canva-course-card__action {
+  width: 100%;
+  text-align: center;
+}
+
+.canva-detail-hero,
+.canva-detail-section,
+.canva-contact-cta {
+  max-width: 48rem;
+  margin-inline: auto;
+}
+
+.canva-detail-hero {
+  display: grid;
+  gap: var(--space-4);
+  padding-block: var(--space-4);
+}
+
+.canva-detail-hero h1 {
+  margin: var(--space-1) 0 0;
+  color: var(--color-heading);
+  font-size: clamp(2rem, 8vw, 3rem);
+  line-height: 1.2;
+}
+
+.canva-detail__status {
+  display: inline-flex;
+  width: fit-content;
+  margin: var(--space-3) 0 0;
+  padding: var(--space-1) var(--space-2);
+  border-radius: 999px;
+  background: var(--color-surface-soft);
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.canva-detail__intro {
+  margin-block: var(--space-3) 0;
+}
+
+.canva-detail__poster {
+  overflow: hidden;
+  border-radius: 1.25rem;
+  background: var(--color-surface-soft);
+}
+
+.canva-detail__poster img {
+  width: 100%;
+}
+
+.canva-detail-section {
+  margin-block-start: var(--space-6);
+}
+
+.canva-detail-section h2,
+.canva-contact-cta h2 {
+  margin: 0 0 var(--space-3);
+  color: var(--color-heading);
+  font-size: 1.45rem;
+}
+
+.canva-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-border);
+}
+
+.canva-info-grid > div {
+  padding: var(--space-3);
+  background: var(--color-surface);
+}
+
+.canva-info-grid dt {
+  color: var(--color-text);
+  font-size: var(--text-small);
+}
+
+.canva-info-grid dd {
+  margin: 0.2rem 0 0;
+  color: var(--color-heading);
+  font-weight: 700;
+}
+
+.canva-module-list {
+  display: grid;
+  gap: var(--space-2);
+  padding: 0;
+  list-style: none;
+}
+
+.canva-module-list li {
+  display: grid;
+  gap: 0.15rem;
+  padding: var(--space-3);
+  border-left: 0.25rem solid var(--color-accent);
+  background: var(--color-surface-soft);
+}
+
+.canva-module-list strong { color: var(--color-heading); }
+
+.canva-works-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.canva-works-grid figure {
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--radius-medium);
+  background: var(--color-surface-soft);
+}
+
+.canva-works-grid img { width: 100%; }
+
+.canva-empty-note {
+  margin: 0;
+  padding: var(--space-4);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface-soft);
+  color: var(--color-text);
+}
+
+.canva-faq-list {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.canva-faq-list details {
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+}
+
+.canva-faq-list summary {
+  cursor: pointer;
+  color: var(--color-heading);
+  font-weight: 700;
+}
+
+.canva-faq-list p { margin: var(--space-2) 0 0; }
+
+.canva-contact-cta {
+  margin-block: var(--space-6);
+  padding: var(--space-5);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface-soft);
+  text-align: center;
+}
+
+.floating-whatsapp {
+  position: fixed;
+  z-index: 4;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  padding: 0.55rem 0.85rem;
+  border-radius: 999px;
+  background: #198754;
+  color: #fff;
+  font-size: var(--text-small);
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 0.25rem 0.75rem rgb(0 0 0 / 12%);
+}
+
 .workshop-intro__supporting-claim {
   max-width: 34rem;
   margin: var(--space-2) 0 0;

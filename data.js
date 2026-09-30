@@ -216,8 +216,8 @@ const siteData = {
         summary: "从认识 Canva 到完成第一份自己的学习作品。",
         status: "open",
         statusLabel: "招生中",
-        image: "images/canva-level1-course-outline.jpg",
-        imageAlt: "Canva Level 1 课程宣传图",
+        image: "images/canva-level1-cover.png",
+        imageAlt: "Canva Level 1 课程封面",
         detailUrl: "canva-level1.html",
         intro: "Canva 课程采用 Level 制，不按年龄分班。目前公开对象先定位为小学三年级起至中学生，循序练习把想法变成作品。",
         info: {

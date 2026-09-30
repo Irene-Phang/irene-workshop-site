@@ -525,6 +525,13 @@ function renderCanvaCourseDetail() {
   }));
 
   const modules = page.querySelector("[data-canva-modules]");
+  const outline = page.querySelector("[data-canva-outline]");
+  if (outline && level.courseOutlineImage) {
+    const image = document.createElement("img");
+    image.src = level.courseOutlineImage;
+    image.alt = level.courseOutlineImageAlt || "课程内容图";
+    outline.replaceChildren(image);
+  }
   modules.replaceChildren(...level.modules.map((module) => {
     const item = document.createElement("li");
     const name = document.createElement("strong");

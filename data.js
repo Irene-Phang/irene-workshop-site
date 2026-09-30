@@ -228,22 +228,9 @@ const siteData = {
           schedule: "报名后通知",
           fee: "RM 价钱待公布"
         },
-        modules: [
-          { name: "01｜Introduction, Interface, Elements", topic: "认识 Canva 界面与基本元素" },
-          { name: "02｜Text", topic: "学习文字工具，让文字更有吸引力" },
-          { name: "03｜Shape", topic: "使用各种形状，打造丰富设计" },
-          { name: "04｜Position, Alignment", topic: "掌握位置与对齐，让版面更专业" },
-          { name: "05｜Color & Transparency", topic: "玩转颜色与透明度，让作品更有层次" },
-          { name: "06｜Canva AI: Image Generation", topic: "用 AI 生成创意图片，让想象力无限延伸" },
-          { name: "07｜Photo Editing", topic: "学习编辑照片，让图片更完美" },
-          { name: "08｜Frame", topic: "使用相框与形状框，让图片更有设计感" },
-          { name: "09｜QR Code + Dynamic QR", topic: "制作 QR Code，让分享更简单" },
-          { name: "10｜Link", topic: "添加链接，让作品互动起来" },
-          { name: "11｜Mockup", topic: "使用 Mockup，让作品更真实、更专业" },
-          { name: "12｜Table", topic: "制作表格，让信息整理更清晰" }
-        ],
-        courseOutlineImage: "images/canva-level1-course-outline.jpg",
-        courseOutlineImageAlt: "Canva Level 1 十二堂课课程内容",
+        modules: [],
+        courseOutlineImage: "images/canva-level1-course-cards.png",
+        courseOutlineImageAlt: "Canva Level 1 六个课程内容卡片",
         works: [],
         faqs: [
           { question: "需要自备电脑吗？", answer: "建议自备电脑或平板，方便跟着课堂一起操作。" },

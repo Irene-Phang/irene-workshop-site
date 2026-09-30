@@ -541,6 +541,7 @@ function renderCanvaCourseDetail() {
     item.append(name, topic);
     return item;
   }));
+  modules.hidden = level.modules.length === 0;
 
   const works = page.querySelector("[data-canva-works]");
   works.replaceChildren(...level.works.map((work) => {

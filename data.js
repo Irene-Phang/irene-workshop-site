@@ -231,7 +231,14 @@ const siteData = {
         modules: [],
         courseOutlineImage: "images/canva-level1-course-cards.png",
         courseOutlineImageAlt: "Canva Level 1 六个课程内容卡片",
-        works: [],
+        works: [
+          {
+            type: "video",
+            video: "images/canva-level1-student-work.mp4",
+            poster: "images/canva-level1-cover.png",
+            alt: "Canva Level 1 学生作品展示"
+          }
+        ],
         faqs: [
           { question: "需要自备电脑吗？", answer: "建议自备电脑或平板，方便跟着课堂一起操作。" },
           { question: "零基础可以参加吗？", answer: "可以。Level 1 会从基础操作开始，适合第一次接触 Canva 的学生。" },

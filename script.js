@@ -546,10 +546,21 @@ function renderCanvaCourseDetail() {
   const works = page.querySelector("[data-canva-works]");
   works.replaceChildren(...level.works.map((work) => {
     const figure = document.createElement("figure");
-    const image = document.createElement("img");
-    image.src = work.image;
-    image.alt = work.alt || "学生作品";
-    figure.append(image);
+    if (work.type === "video" && work.video) {
+      const video = document.createElement("video");
+      video.controls = true;
+      video.playsInline = true;
+      video.preload = "metadata";
+      video.src = work.video;
+      if (work.poster) video.poster = work.poster;
+      video.setAttribute("aria-label", work.alt || "学生作品视频");
+      figure.append(video);
+    } else if (work.image) {
+      const image = document.createElement("img");
+      image.src = work.image;
+      image.alt = work.alt || "学生作品";
+      figure.append(image);
+    }
     return figure;
   }));
   page.querySelector("[data-canva-works-empty]").hidden = level.works.length > 0;

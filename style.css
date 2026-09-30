@@ -838,7 +838,10 @@ textarea {
   background: var(--color-surface-soft);
 }
 
-.canva-works-grid img { width: 100%; }
+.canva-works-grid img,
+.canva-works-grid video {
+  width: 100%;
+}
 
 .canva-empty-note {
   margin: 0;

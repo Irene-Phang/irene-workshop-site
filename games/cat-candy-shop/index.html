@@ -376,7 +376,8 @@
     .t-hearts{gap:2px;}.t-hearts .lbl{font-size:12px;}.t-hearts svg{width:18px;height:18px;}
     #mid{left:var(--phone-left);right:var(--phone-right);
       top:calc(var(--phone-top) + 64px);height:calc(58% - var(--phone-top) - 64px);
-      grid-template-columns:minmax(0,1fr) minmax(0,1.65fr) minmax(0,1fr);gap:10px;}
+      grid-template-columns:minmax(0,1fr) minmax(0,1.65fr) minmax(0,1fr);
+      grid-template-rows:minmax(0,1fr);gap:10px;}
     #order{padding:14px 10px 7px;gap:5px;min-width:0;}
     .ribbon{font-size:15px;height:26px;top:-13px;padding:0 14px;}
     .o-row{font-size:18px;gap:6px;flex-wrap:wrap;line-height:1.15;}
@@ -421,6 +422,31 @@
     .ov-card h2{font-size:24px;}.ov-card .score{font-size:30px;}
     .ov-card p{font-size:18px!important;}.ov-stars svg{width:22px;height:22px;}
     .ov-review{max-height:64px;font-size:16px;}
+  }
+  @media (orientation:landscape) and (min-aspect-ratio:2/1) and (max-height:320px){
+    #top{height:42px;padding:2px 5px;gap:2px 4px;border-radius:11px;}
+    .t-name{max-width:100px;font-size:13px;}
+    .t-lv,.t-coins{font-size:11px;}
+    .t-back,.t-hint,.t-snd,.t-mus{font-size:10px;height:24px;padding:0 6px;}
+    .t-tiles{gap:2px;}.t-tiles i{width:8px;height:8px;}
+    .t-hearts .lbl{font-size:10px;}.t-hearts svg{width:14px;height:14px;}
+    #mid{top:calc(var(--phone-top) + 48px);height:calc(64% - var(--phone-top) - 48px);gap:6px;}
+    #order,#bench,#clerk{min-height:0;}
+    #order{padding:9px 5px 3px;gap:1px;}
+    .ribbon{font-size:12px;height:20px;top:-10px;padding:0 9px;}
+    .o-row{font-size:13px;gap:2px;line-height:1.05;flex-wrap:nowrap;}
+    #order .o-row:nth-of-type(4){font-size:11px!important;}
+    .slip{width:13px;height:15px;}
+    #oPill{font-size:15px;padding:0 4px;}
+    .o-prog{gap:3px;}.o-prog i{width:14px;height:14px;}
+    #bench{padding:3px 5px;}.b-head{font-size:11px;}
+    #btnPack{font-size:13px;height:22px;min-height:22px;margin-top:1px;}
+    #clerk{padding:3px;}.bubble{font-size:13px;line-height:1.05;padding:2px;}
+    #shelf{top:64%;}
+    #trays{top:3px;bottom:var(--phone-bottom);gap:2px 7px;}
+    .tray .tag{height:20px;}.tray .tag > span{font-size:16px;}
+    #banner{font-size:15px;top:51px;}
+    #hintbox{font-size:14px;top:25%;padding:5px 8px;}
   }
 </style>
 </head>
